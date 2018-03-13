@@ -1,0 +1,103 @@
+#!/bin/csh -f
+
+# Script to generate meteorology metafiles for visualizing with PAVE
+#
+# Created by: Alison Eyth
+#             MCNC--North Carolina Supercomputing Center
+#             April 16, 1996
+#
+# This script will create metafiles for the meteorological input files 
+# to the UAM-V which use OTAG file naming conventions.
+
+
+setenv DPATH     /afs/ncsc.org/proj/otag/uamv
+setenv EPIS      jul93
+setenv INPUT_DIR $DPATH/$EPIS/input
+setenv MET_MODEL rams
+setenv MET_DIR   $INPUT_DIR/$MET_MODEL
+ 
+setenv METADIR $INPUT_DIR/inmeta
+if (! -d $METADIR ) mkdir -p $METADIR
+
+echo "Placing metafiles in $METADIR"
+echo ""
+cd $MET_DIR
+foreach f (*)
+   echo "Processing $f"
+
+   # Parse file name
+
+   set ftype    = `echo $f | cut -f 1 -d .`
+   set grid     = `echo $f | cut -f 2 -d .`
+
+   # Set PAVE UAM-V type
+   #
+   # PAVE UAM-V types: Wind, Temp, Cloud, H2O, Rain, Vdif, Height, 
+   #                  FineGridAverage, FineGridInstant
+
+   switch ($ftype)
+     case clou: 
+        set uamvtype = Cloud
+        breaksw
+     case hght: 
+        set uamvtype = Height
+        breaksw
+     case rain: 
+        set uamvtype = Rain
+        breaksw
+     case tmpr: 
+        set uamvtype = Temp
+        breaksw
+     case vdif: 
+        set uamvtype = Vdif
+        breaksw
+     case wind: 
+        set uamvtype = Wind
+        set numspecs = 2
+        breaksw
+     case wvap: 
+        set uamvtype = H2O
+        breaksw
+     default:
+        echo "Invalid file type for file $f"
+   endsw
+
+   if ($grid == cc) then
+
+      cat << -eof- > $METADIR/$f.meta
+#! UAMV DESCRIPTION FILE 
+UAMV_FILE $MET_DIR/$f
+UAMV_TYPE  $uamvtype
+NCOLS      64
+NROWS      63
+LEVELS      5
+XORG       -99.0
+YORG       26.0
+DLON       0.5
+DLAT       0.3333333
+FINE_GRID  0
+TITLE      Coarse grid $uamvtype
+-eof-
+
+   else if ($grid == ff) then
+
+      cat << -eof- > $METADIR/$f.meta
+#! UAMV DESCRIPTION FILE 
+UAMV_FILE $MET_DIR/$f
+UAMV_TYPE  $uamvtype
+NCOLS      137
+NROWS      110
+LEVELS     7
+XORG       -92.0
+YORG       32.0
+DLON       0.16058394
+DLAT       0.10909091
+FINE_GRID  0
+TITLE      Fine grid $uamvtype
+-eof-
+
+   else
+       echo "Invalid grid for file $f"
+   endif
+
+end

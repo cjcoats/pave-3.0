@@ -1,0 +1,74 @@
+
+#.........................................................................
+# Version "$Id: Makeinclude.debug 84 2018-03-12 21:26:53Z coats $"
+#  Directories:
+#       Assumption:  we will only be installing one set of libraries and
+#       executables, in ${LIBDIR} and ${BINDIR} (else use the definitions
+#       with BINDIR = ${BASEDIR}/${BUILD})
+#
+#       We will be using medium-memory model with the GNU compiler-set.
+#
+#       ${BASEDIR}  is the root directory for the PAVE installation
+#       $(IOSRC)    is the source directory for the I/O API library
+#       $(IOLIB)    is the library/object directory for the I/O API library
+#       ${OBJDIR}   is the current machine/compiler/flag-specific
+#                   build-directory
+#       ${LIBDIR}   is the current pave+extras library directory
+#       ${BINDIR}   is the current pave-executables    directory
+#.........................................................................
+#
+#       ---------------     Definitions:   -------------------------
+
+.SUFFIXES: .m4 .c .cc .h .F .f .f90 .F90
+
+BUILD     = Linux2_x86_64gfort_mediumdbg
+
+#........  Directory definitions:
+
+BASEDIR = ${HOME}/apps/pave-23.0
+EXTERN  = ${BASEDIR}/external_libs
+INCDIR  = ${BASEDIR}/include
+LIBDIR  = ${BASEDIR}/lib
+SRCINC  = ${BASEDIR}/src/include
+IOSRC   = ${HOME}/ioapi-3.2/ioapi
+# IOLIB   = ${HOME}/ioapi-3.2/${BUILD}
+IOLIB   = ${HOME}/ioapi-3.2/Linux2_x86_64gfort_medium
+# BINDIR  = ${BASEDIR}/bin
+BINDIR  = ${BASEDIR}/${BUILD}
+
+#........ Architecture dependent stuff from ${IOSRC}/Makeinclude.${BUILD}:
+
+# include ${IOSRC}/Makeinclude.${BUILD}
+AR        = ar
+CC        = gcc
+CXX       = g++
+FC        = gfortran
+MFLAGS    = -mcmodel=medium -Wsurprising -fbounds-check -ftrapuv
+OMPFLAGS  = -fopenmp
+OMPLIBS   = 
+ARCHLIBS  = -L/usr/lib64 -Bstatic -lm -lpthread -lc
+ARCHFLAGS =
+
+# I/O API and netCDF libraries.
+# Note that building netCDF-Fortran 4.x with "gfortran -mcmodel=medium" may fail,
+# so we may fall back to netCDF-3.6.x... ;-(
+# Note also that since we have to linke C++ components with ${CXX}.
+# we need the Fortran-compiler support libraries for the I/O API parts.
+
+# IOLIBS    = -L${IOLIB}  -lioapi -lnetcdff -lnetcdf
+
+IOLIBS  = -L${IOLIB}  -lioapi -lnetcdf
+FCLIBS  = -L/usr/lib64 -Bdynamic -lgfortran
+EXTLIBS = -L${LIBDIR}  -Bstatic  -lproj -lplplotftk -lBLT -ltcl8.4 -ltk8.4 -lXm -lXt -lX11
+# EXTLIBS = -L${LIBDIR}  -Bstatic  -lproj -lplplotftk -lBLT -ltcl8.4 -ltk8.4 \
+# -L/usr/lib64 -lXm -lXt -lX11
+
+#........ C/C++ compiler-flags:
+#  PAVE is a mixed C/C++/Fortran code, where the C++ uses a lot of
+#  "legacy/backwards-compatible" constructs, so you need to have an
+#  include-directive for finding the relevant include-files.
+#  For my system, they're in "/usr/include/c++/3.3.6/backward".
+
+CXXSTUFF = -I/usr/include/c++/3.3.6/backward
+CPPFLAGS = -I${SRCINC} -I${INCDIR} -I${IOSRC} -I/usr/include ${CXXSTUFF} -D_GNU_SOURCE=1
+OPTFLAGS = -g ${MFLAGS} ${OMPFLAGS}

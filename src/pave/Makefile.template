@@ -1,0 +1,606 @@
+#
+#.........................................................................
+# Version "$Id: Makefile.template 83 2018-03-12 19:24:33Z coats $"
+# EDSS/Models-3 PAVE
+#    (C) 2018 Carlie J. Coats, Jr.
+# Distributed under the GNU GENERAL PUBLIC LICENSE version 2
+# See file "GPL.txt" for conditions of use.
+#.........................................................................
+#  Environment Variables:
+#       BUILD   machine/OS/compiler/mode type. Shows up as suffix
+#               for I/O API "Makeinclude.${BIN}" to determine compilation
+#               flags, and in ${OBJDIR} and $(INSTALL) to determine
+#               binary directories
+#       INSTALL installation-directory root, used for "make install"
+#.........................................................................
+#  Directories:
+#       Assumption:  we will only be installing one set of libraries and
+#       executables, in ${LIBDIR} and ${BINDIR} (else use the definitions
+#       with ${BASEDIR}/${BIN})
+#
+#       ${BASEDIR}  is the root directory for the PAVE installation
+#       $(IOSRC)    is the source directory for the I/O API library
+#       $(IOBIN)    is the library/object directory for the I/O API library
+#       ${OBJDIR}   is the current machine/compiler/flag-specific
+#                   build-directory
+#       ${BINDIR}   is the installation executables-directory
+#.........................................................................
+#
+#       ---------------     Definitions and rules:   -------------------------
+
+include ../Makeinclude
+
+SRCDIR  = ${BASEDIR}/src/pave
+OBJDIR  = ${SRCDIR}/${BUILD}
+
+VPATH = ${SRCDIR}:${OBJDIR}:${BINDIR}:${INCDIR}:${IOLIB}
+
+# need "-I/usr/include/c++/3.3.6/backward" for "g++" header-files
+
+CFLAGS = $(ARCHFLAGS) ${OPTFLAGS} ${CPPFLAGS} -I/usr/include/c++/3.3.6/backward
+ 
+LFLAGS = ${OMPFLAGS} ${ARCHFLAGS}
+
+#  Depending upon the libraries installed on your system and on your 
+# "external_libs/lib" configuration, you may want to move various libraries
+# to the "L/usr/lib64" section and to introduce "-Bdynamic" directives
+# as appropriate.
+
+LIBS   =  -Bstatic -L. -lbus ${IOLIBS} ${EXTLIBS} ${FCLIBS} ${OMPLIBS} ${ARCHLIBS}
+
+#LIBS   = -L. -lbus -Bstatic -L${LIBDIR} ${IOLIBS} ${FCLIBS} \
+# -L${LIBDIR} -lplplotftk \
+# -L/usr/lib64 -Bdynamic -lblt -ltcl -ltk -lproj -lXm -lXt -lX11 -lz -lm -lpthread -lc
+
+CSRC = \
+  Brow_fns.c \
+  Browser.c \
+  DataImport.c \
+  Error.c \
+  File.c \
+  MapFile.c \
+  MapProjections.c \
+  MapProjectionsInfo.c \
+  MapUtilities.c \
+  Memory.c \
+  alpha.c \
+  busClient.c \
+  busFtp.c \
+  busFtpIntrnl.c \
+  busMaster.c \
+  busMasterTime.c \
+  busMsgQue.c \
+  busRW.c \
+  busRWMessage.c \
+  busRpc.c \
+  busSocket.c \
+  busTimeStamp.c \
+  busTxtClient.c \
+  busUtil.c \
+  busXt.c \
+  busd.c \
+  dates.c \
+  dump.c \
+  farbe2d.c \
+  free_vis.c \
+  get_info_and_data.c \
+  graph2d.c \
+  map.c \
+  map_overlay.c \
+  masterDB.c \
+  masterRTFuncs.c \
+  migrate.c \
+  mm.c \
+  newMaster.c \
+  parse.c \
+  plot_3d.c \
+  plplot3d_sub.c \
+  record.c \
+  recordv.c \
+  retrieveData.c \
+  show_vis.c \
+  toplats.c \
+  uam.c \
+  uamv.c \
+  util.c \
+  utils.c \
+  utils.noioapi.c \
+  visDataClient.c \
+  visd.c \
+  xferVisData.c
+
+CXXSRC = \
+  Alias.cc \
+  AppInit.cc \
+  BarWnd.cc \
+  BaseType.cc \
+  BasicComponent.cc \
+  FileBrowser.cc \
+  BtsData.cc \
+  BusConnect.cc \
+  CaseServer.cc \
+  ColorChooser.cc \
+  ColorLegend.cc \
+  ColorModel.cc \
+  ComboData.cc \
+  ComboWnd.cc \
+  Config.cc \
+  Contour.cc \
+  DataSet.cc \
+  Domain.cc \
+  DomainWnd.cc \
+  DrawScale.cc \
+  DrawWnd.cc \
+  DriverWnd.cc \
+  ExportServer.cc \
+  Formula.cc \
+  FormulaServer.cc \
+  HSVView.cc \
+  Level.cc \
+  Link.cc \
+  LinkedList.cc \
+  LocalFileBrowser.cc \
+  Main.cc \
+  Map.cc \
+  MapServer.cc \
+  Menus.cc \
+  MultiSel.cc \
+  OptionManager.cc \
+  RGBController.cc \
+  RGBView.cc \
+  ReadComboData.cc \
+  ReadVisData.cc \
+  RubberBand.cc \
+  SelectLoadSaveServer.cc \
+  SelectionServer.cc \
+  Shell.cc \
+  SpeciesServer.cc \
+  StepUI.cc \
+  StringPair.cc \
+  SwatchView.cc \
+  TextView.cc \
+  TileWnd.cc \
+  UIComponent.cc \
+  Util.cc \
+  Vector2d.cc
+  
+
+OBJ  = $(CSRC:.c=.o) $(CXXSRC:.cc=.o)
+
+LIB = libbus.a
+
+EXE = Browser busMaster busd pave.exe visd
+
+
+#      ----------------------   TOP-LEVEL TARGETS:   ------------------
+
+all: $(EXE)
+
+obj: $(OBJ)
+
+lib: $(LIB)
+
+clean:
+	cd ${OBJDIR}; rm -f $(EXE) $(LIB) $(OBJ)
+
+distclean:
+	cd ${OBJDIR}; rm -f $(EXE) $(LIB) $(OBJ); cd ${BINDIR}; rm $(EXE)
+
+rmexe:
+	cd ${BINDIR}; rm -f $(EXE)
+
+relink: rmexe all
+
+dirs: $(OBJDIR) $(BINDIR)
+	mkdir -p $(OBJDIR) $(BINDIR)
+
+depend:
+	makedepend -Y -I${SRCINC} -- $(CSRC) $(CXXSRC)
+
+#      -----------------------   RULES:   -------------------------
+# OBJDIR and SRCDIR defined in ${BASEDIR}/src/*/Makefile
+
+%.o : %.mod        #  Disable "gmake"s obnoxious implicit Modula-2 rule !!
+
+.c.o:
+	cd ${OBJDIR}; $(CC) -DFLDMN=1 $(CFLAGS) -c $(SRCDIR)/$<
+
+.cc.o:
+	cd ${OBJDIR}; $(CXX) -DFLDMN=1 $(CFLAGS) -c $(SRCDIR)/$<
+
+
+#  ---------------------------  $(EXE) Program builds:  -----------------
+
+libbus.a: busClient.o busFtp.o busFtpIntrnl.o busTxtClient.o busSocket.o \
+   busRW.o busMsgQue.o busRWMessage.o busRpc.o busXt.o busUtil.o busTimeStamp.o
+	cd ${OBJDIR}; ar crs ./$@ $^
+
+Browser: $(LIB)
+Browser: Browser.o Brow_fns.o
+	cd ${OBJDIR}; $(CC) ${LFLAGS} $^ ${LIBS} -o ${BINDIR}/$@
+
+busd: $(LIB)
+busd: busd.o busFtp.o busFtpIntrnl.o
+	cd ${OBJDIR}; $(CC) ${LFLAGS} $^ ${LIBS} -o ${BINDIR}/$@
+
+busMaster: $(LIB)
+busMaster: busMaster.o busMasterTime.o masterDB.o masterRTFuncs.o newMaster.o
+	cd ${OBJDIR}; $(CC) ${LFLAGS} $^ ${LIBS} -o ${BINDIR}/$@
+
+pave.exe: Main.o Alias.o AppInit.o BarWnd.o BaseType.o BasicComponent.o \
+  FileBrowser.o BtsData.o BusConnect.o CaseServer.o ColorChooser.o \
+  ColorLegend.o ColorModel.o ComboData.o ComboWnd.o Config.o Contour.o \
+  DataSet.o Domain.o DomainWnd.o DrawScale.o DrawWnd.o DriverWnd.o \
+  ExportServer.o Formula.o FormulaServer.o HSVView.o Level.o Link.o \
+  LinkedList.o LocalFileBrowser.o Map.o MapServer.o Menus.o MultiSel.o \
+  OptionManager.o RGBController.o RGBView.o ReadComboData.o \
+  ReadVisData.o RubberBand.o SelectLoadSaveServer.o SelectionServer.o \
+  Shell.o SpeciesServer.o StepUI.o StringPair.o SwatchView.o TextView.o \
+  TileWnd.o UIComponent.o Util.o Vector2d.o DataImport.o Error.o File.o \
+  MapFile.o MapProjections.o MapProjectionsInfo.o MapUtilities.o \
+  Memory.o alpha.o dates.o dump.o farbe2d.o free_vis.o \
+  get_info_and_data.o graph2d.o map.o map_overlay.o \
+  migrate.o mm.o parse.o plot_3d.o plplot3d_sub.o record.o recordv.o \
+  retrieveData.o show_vis.o toplats.o uam.o uamv.o util.o utils.o \
+  visDataClient.o xferVisData.o
+	cd ${OBJDIR}; $(CXX) ${LFLAGS} $^ ${LIBS} -o ${BINDIR}/$@
+
+visd:  visd.o alpha.o dates.o free_vis.o get_info_and_data.o migrate.o \
+  record.o recordv.o show_vis.o toplats.o uam.o uamv.o utils.o \
+  visDataClient.o xferVisData.o
+	cd ${OBJDIR}; echo ${VOBJ}; $(CC) ${LFLAGS} $^ ${LIBS} -o ${BINDIR}/$@
+
+
+#  ---------------------------  Dependencies    :  --------------------
+# DO NOT DELETE THIS LINE -- make depend depends on it.
+
+Alias.o             : Alias.h LinkedList.h Link.h BaseType.h
+AppInit.o           : AppInit.h UIComponent.h BasicComponent.h
+BarWnd.o            : BarWnd.h ComboWnd.h DrawWnd.h Shell.h AppInit.h
+BarWnd.o            : UIComponent.h BasicComponent.h DrawScale.h vis_proto.h
+BarWnd.o            : vis_data.h Menus.h RubberBand.h Util.h ComboData.h BaseType.h
+BasicComponent.o    : BasicComponent.h
+Brow_fns.o          : Browser.h bus.h busClient.h busMsgQue.h busError.h busDebug.h
+Brow_fns.o          : busXtClient.h busRW.h busVersion.h busRpc.h busUtil.h busFtp.h
+Browser.o           : Browser.h bus.h busClient.h busMsgQue.h busError.h busDebug.h
+Browser.o           : busXtClient.h busRW.h busVersion.h busRpc.h busUtil.h busFtp.h
+BtsData.o           : BtsData.h Util.h bts.h vis_data.h vis_proto.h visDataClient.h
+BtsData.o           : bus.h busClient.h busMsgQue.h busError.h busDebug.h
+BtsData.o           : busXtClient.h busRW.h busVersion.h busRpc.h busUtil.h
+BtsData.o           : readuam.h netcdf.h parse.h utils.h retrieveData.h
+BusConnect.o        : BusConnect.h AppInit.h UIComponent.h BasicComponent.h
+BusConnect.o        : bts.h vis_data.h vis_proto.h visDataClient.h
+BusConnect.o        : bus.h busClient.h busMsgQue.h busError.h busDebug.h
+BusConnect.o        : busXtClient.h busRW.h busVersion.h busRpc.h busUtil.h
+BusConnect.o        : readuam.h netcdf.h parse.h utils.h retrieveData.h
+CaseServer.o        : BarWnd.h ExportServer.h MultiSel.h StringPair.h
+CaseServer.o        : BusConnect.h OptionManager.h ComboData.h ComboWnd.h
+CaseServer.o        : CaseServer.h SelectLoadSaveServer.h SelectionServer.h
+CaseServer.o        : Config.h TileWnd.h ColorLegend.h ColorChooser.h
+CaseServer.o        : MapUtilities.h MapFile.h MapProjections.h Menus.h
+CaseServer.o        : PlotData.h ContourData.h contour.h Vector2d.h
+CaseServer.o        : RubberBand.h Level.h Alias.h BtsData.h DriverWnd.h
+CaseServer.o        : Shell.h AppInit.h ReadVisData.h MapServer.h Map.h
+CaseServer.o        : SpeciesServer.h FormulaServer.h Formula.h DataSet.h
+CaseServer.o        : StepUI.h Domain.h DomainWnd.h DrawScale.h DrawWnd.h
+CaseServer.o        : UIComponent.h BasicComponent.h bts.h vis_data.h vis_proto.h
+CaseServer.o        : Util.h LinkedList.h Link.h BaseType.h LocalFileBrowser.h
+CaseServer.o        : busXtClient.h busRW.h busVersion.h busRpc.h busUtil.h
+CaseServer.o        : readuam.h netcdf.h parse.h utils.h retrieveData.h
+CaseServer.o        : visDataClient.h bus.h busClient.h busMsgQue.h busError.h busDebug.h
+ColorChooser.o      : BasicComponent.h SwatchView.h RGBController.h RGBView.h
+ColorChooser.o      : ColorChooser.h
+ColorChooser.o      : ColorModel.h HSVView.h TextView.h ColorView.h UIComponent.h
+ColorLegend.o       : ColorLegend.h ColorChooser.h UIComponent.h BasicComponent.h
+ColorLegend.o       : DrawScale.h Config.h bts.h vis_data.h vis_proto.h visDataClient.h
+ColorLegend.o       : bus.h busClient.h busMsgQue.h busError.h busDebug.h
+ColorLegend.o       : busXtClient.h busRW.h busVersion.h busRpc.h busUtil.h
+ColorLegend.o       : readuam.h netcdf.h parse.h utils.h retrieveData.h
+ColorModel.o        : ColorModel.h ColorView.h UIComponent.h BasicComponent.h
+ComboData.o         : ComboData.h ComboWnd.h DrawWnd.h Shell.h AppInit.h
+ComboWnd.o          : UIComponent.h BasicComponent.h DrawScale.h vis_proto.h
+ComboWnd.o          : vis_data.h Menus.h RubberBand.h Util.h ComboData.h
+Config.o            : Config.h
+Contour.o           : ContourData.h contour.h
+DataImport.o        : Assertions.h Error.h Memory.h File.h DataImport.h
+DataSet.o           : AppInit.h UIComponent.h BasicComponent.h
+DataSet.o           : DataSet.h LinkedList.h Link.h BaseType.h StepUI.h
+DataSet.o           : Domain.h DomainWnd.h DrawScale.h DrawWnd.h Shell.h
+DataSet.o           : LocalFileBrowser.h SpeciesServer.h
+DataSet.o           : MapFile.h MapProjections.h Menus.h RubberBand.h
+DataSet.o           : ReadVisData.h MapServer.h Map.h MapUtilities.h
+DataSet.o           : SelectLoadSaveServer.h SelectionServer.h BtsData.h
+DataSet.o           : Util.h Formula.h Level.h FormulaServer.h Alias.h
+DataSet.o           : bus.h busClient.h busMsgQue.h busError.h busDebug.h
+DataSet.o           : busXtClient.h busRW.h busVersion.h busRpc.h busUtil.h
+DataSet.o           : readuam.h netcdf.h parse.h utils.h retrieveData.h
+DataSet.o           : vis_proto.h vis_data.h bts.h visDataClient.h
+Domain.o            : Alias.h BtsData.h Level.h LocalFileBrowser.h
+Domain.o            : Domain.h LinkedList.h Link.h BaseType.h DomainWnd.h
+Domain.o            : DrawScale.h DrawWnd.h Shell.h AppInit.h
+Domain.o            : MapFile.h MapProjections.h visDataClient.h
+Domain.o            : Menus.h RubberBand.h Util.h Formula.h DataSet.h StepUI.h
+Domain.o            : ReadVisData.h MapServer.h Map.h MapUtilities.h
+Domain.o            : SpeciesServer.h SelectionServer.h FormulaServer.h
+Domain.o            : UIComponent.h BasicComponent.h vis_proto.h vis_data.h
+Domain.o            : bus.h busClient.h busMsgQue.h busError.h busDebug.h
+Domain.o            : busXtClient.h busRW.h busVersion.h busRpc.h busUtil.h
+Domain.o            : readuam.h bts.h netcdf.h parse.h utils.h retrieveData.h
+DomainWnd.o         : Alias.h SelectLoadSaveServer.h BtsData.h Level.h
+DomainWnd.o         : Domain.h SpeciesServer.h SelectionServer.h FormulaServer.h
+DomainWnd.o         : DomainWnd.h LinkedList.h Link.h BaseType.h
+DomainWnd.o         : DrawScale.h DrawWnd.h Shell.h AppInit.h
+DomainWnd.o         : LocalFileBrowser.h
+DomainWnd.o         : MapFile.h MapProjections.h visDataClient.h
+DomainWnd.o         : Menus.h RubberBand.h Util.h Formula.h DataSet.h StepUI.h
+DomainWnd.o         : ReadVisData.h MapServer.h Map.h MapUtilities.h
+DomainWnd.o         : UIComponent.h BasicComponent.h vis_proto.h vis_data.h
+DomainWnd.o         : bus.h busClient.h busMsgQue.h busError.h busDebug.h
+DomainWnd.o         : busXtClient.h busRW.h busVersion.h busRpc.h busUtil.h
+DomainWnd.o         : readuam.h bts.h netcdf.h parse.h utils.h retrieveData.h
+DrawScale.o         : DrawScale.h
+DrawWnd.o           : DrawScale.h vis_proto.h vis_data.h
+DrawWnd.o           : DrawWnd.h Shell.h AppInit.h UIComponent.h BasicComponent.h
+DriverWnd.o         : BaseType.h vis_data.h Map.h MapUtilities.h MapFile.h
+DriverWnd.o         : BtsData.h BusConnect.h OptionManager.h ComboData.h
+DriverWnd.o         : CaseServer.h SelectLoadSaveServer.h SelectionServer.h
+DriverWnd.o         : ComboWnd.h BarWnd.h ExportServer.h MultiSel.h
+DriverWnd.o         : DrawScale.h DrawWnd.h Shell.h Menus.h RubberBand.h
+DriverWnd.o         : DriverWnd.h Config.h AppInit.h UIComponent.h BasicComponent.h
+DriverWnd.o         : MapProjections.h vis_proto.h visDataClient.h
+DriverWnd.o         : PlotData.h ContourData.h contour.h Vector2d.h
+DriverWnd.o         : SpeciesServer.h FormulaServer.h Formula.h DataSet.h
+DriverWnd.o         : StepUI.h Domain.h DomainWnd.h Level.h Alias.h
+DriverWnd.o         : StringPair.h nan_incl.h
+DriverWnd.o         : TileWnd.h ReadVisData.h MapServer.h LinkedList.h Link.h
+DriverWnd.o         : Util.h ColorLegend.h ColorChooser.h LocalFileBrowser.h
+DriverWnd.o         : bus.h busClient.h busMsgQue.h busError.h busDebug.h
+DriverWnd.o         : busXtClient.h busRW.h busVersion.h busRpc.h busUtil.h
+DriverWnd.o         : readuam.h bts.h netcdf.h parse.h utils.h retrieveData.h
+Error.o             : Assertions.h Error.h
+ExportServer.o      : ExportServer.h SelectLoadSaveServer.h SelectionServer.h
+ExportServer.o      : UIComponent.h BasicComponent.h bts.h vis_data.h
+ExportServer.o      : busMsgQue.h busError.h busDebug.h busXtClient.h
+ExportServer.o      : busRW.h busVersion.h busRpc.h busUtil.h
+ExportServer.o      : readuam.h netcdf.h parse.h utils.h
+ExportServer.o      : retrieveData.h Util.h
+ExportServer.o      : vis_proto.h visDataClient.h bus.h busClient.h
+File.o              : Assertions.h Error.h Memory.h File.h
+FileBrowser.o       : BasicComponent.h bts.h vis_data.h vis_proto.h visDataClient.h
+FileBrowser.o       : Browser.h bus.h busClient.h busMsgQue.h busError.h busDebug.h
+FileBrowser.o       : SelectLoadSaveServer.h SelectionServer.h UIComponent.h
+FileBrowser.o       : busXtClient.h busRW.h busVersion.h busRpc.h busUtil.h
+FileBrowser.o       : readuam.h netcdf.h parse.h utils.h retrieveData.h Util.h
+Formula.o           : DataSet.h StepUI.h vis_proto.h vis_data.h
+Formula.o           : Domain.h DomainWnd.h DrawScale.h DrawWnd.h
+Formula.o           : Formula.h LinkedList.h Link.h BaseType.h
+Formula.o           : MapFile.h MapProjections.h Menus.h RubberBand.h
+Formula.o           : ReadVisData.h MapServer.h Map.h MapUtilities.h
+Formula.o           : SelectLoadSaveServer.h BtsData.h Level.h
+Formula.o           : SelectionServer.h FormulaServer.h Alias.h
+Formula.o           : Shell.h AppInit.h UIComponent.h BasicComponent.h
+Formula.o           : Util.h LocalFileBrowser.h SpeciesServer.h
+Formula.o           : bts.h visDataClient.h bus.h busClient.h
+Formula.o           : busMsgQue.h busError.h busDebug.h busXtClient.h
+Formula.o           : busRW.h busVersion.h busRpc.h busUtil.h
+Formula.o           : readuam.h netcdf.h parse.h utils.h retrieveData.h
+FormulaServer.o     : BaseType.h DataSet.h StepUI.h vis_proto.h vis_data.h
+FormulaServer.o     : BtsData.h DriverWnd.h Config.h TileWnd.h ColorLegend.h
+FormulaServer.o     : ColorChooser.h PlotData.h ContourData.h contour.h
+FormulaServer.o     : ComboData.h ComboWnd.h BarWnd.h ExportServer.h
+FormulaServer.o     : Domain.h DomainWnd.h DrawScale.h DrawWnd.h
+FormulaServer.o     : FormulaServer.h Formula.h LinkedList.h Link.h
+FormulaServer.o     : MapFile.h MapProjections.h Menus.h RubberBand.h
+FormulaServer.o     : MultiSel.h StringPair.h
+FormulaServer.o     : ReadVisData.h MapServer.h Map.h MapUtilities.h
+FormulaServer.o     : SelectionServer.h Level.h Alias.h SelectLoadSaveServer.h
+FormulaServer.o     : Shell.h AppInit.h UIComponent.h BasicComponent.h
+FormulaServer.o     : Util.h LocalFileBrowser.h SpeciesServer.h
+FormulaServer.o     : Vector2d.h CaseServer.h BusConnect.h OptionManager.h
+FormulaServer.o     : bts.h visDataClient.h bus.h busClient.h busMsgQue.h
+FormulaServer.o     : busError.h busDebug.h busXtClient.h busRW.h
+FormulaServer.o     : busVersion.h busRpc.h busUtil.h readuam.h
+FormulaServer.o     : netcdf.h parse.h utils.h retrieveData.h
+HSVView.o           : BasicComponent.h ColorModel.h
+HSVView.o           : HSVView.h TextView.h ColorView.h UIComponent.h
+Level.o             : BtsData.h
+Level.o             : DrawScale.h DrawWnd.h Shell.h AppInit.h
+Level.o             : FormulaServer.h Alias.h SelectLoadSaveServer.h
+Level.o             : Level.h LinkedList.h Link.h BaseType.h bts.h
+Level.o             : LocalFileBrowser.h SpeciesServer.h SelectionServer.h
+Level.o             : MapProjections.h Menus.h RubberBand.h Util.h
+Level.o             : MapServer.h Map.h MapUtilities.h MapFile.h
+Level.o             : StepUI.h Formula.h DataSet.h Domain.h DomainWnd.h
+Level.o             : UIComponent.h BasicComponent.h ReadVisData.h
+Level.o             : busClient.h busMsgQue.h busError.h busDebug.h
+Level.o             : busXtClient.h busRW.h busVersion.h busRpc.h busUtil.h
+Level.o             : readuam.h netcdf.h parse.h utils.h retrieveData.h
+Level.o             : vis_data.h vis_proto.h visDataClient.h bus.h
+Link.o              : Link.h BaseType.h
+LinkedList.o        : LinkedList.h Link.h BaseType.h
+LocalFileBrowser.o  : LocalFileBrowser.h Util.h
+Main.o              : Alias.h BtsData.h BusConnect.h OptionManager.h
+Main.o              : AppInit.h UIComponent.h BasicComponent.h
+Main.o              : CaseServer.h SelectLoadSaveServer.h SelectionServer.h
+Main.o              : ColorChooser.h LocalFileBrowser.h PlotData.h
+Main.o              : ComboData.h ComboWnd.h BarWnd.h ExportServer.h
+Main.o              : ContourData.h contour.h Vector2d.h
+Main.o              : DataSet.h StepUI.h Domain.h DomainWnd.h Level.h
+Main.o              : DriverWnd.h Config.h TileWnd.h ReadVisData.h
+Main.o              : MapServer.h LinkedList.h Link.h BaseType.h
+Main.o              : Menus.h RubberBand.h Util.h ColorLegend.h
+Main.o              : MultiSel.h StringPair.h
+Main.o              : SpeciesServer.h FormulaServer.h Formula.h
+Main.o              : busMsgQue.h busError.h busDebug.h busXtClient.h
+Main.o              : busRW.h busVersion.h busRpc.h busUtil.h
+Main.o              : readuam.h bts.h netcdf.h parse.h utils.h
+Main.o              : retrieveData.h DrawScale.h DrawWnd.h Shell.h
+Main.o              : vis_data.h Map.h MapUtilities.h MapFile.h MapProjections.h
+Main.o              : vis_proto.h visDataClient.h bus.h busClient.h
+Map.o               : Map.h LinkedList.h Link.h BaseType.h
+Map.o               : MapUtilities.h MapFile.h MapProjections.h
+MapFile.o           : Assertions.h Error.h Memory.h File.h MapFile.h
+MapProjections.o    : MapProjectionsInfo.h MapProjections.h
+MapProjections.o    : projects.h Assertions.h Error.h Memory.h
+MapProjectionsInfo.o: Assertions.h MapProjections.h MapProjectionsInfo.h
+MapServer.o         : MapProjections.h
+MapServer.o         : MapServer.h LinkedList.h Link.h BaseType.h
+MapServer.o         : vis_data.h Map.h MapUtilities.h MapFile.h
+MapUtilities.o      : Assertions.h Error.h Memory.h DataImport.h File.h
+MapUtilities.o      : MapFile.h MapProjections.h MapProjectionsInfo.h MapUtilities.h
+Memory.o            : Assertions.h Error.h Memory.h
+Menus.o             : Menus.h
+MultiSel.o          : BasicComponent.h TileWnd.h ReadVisData.h
+MultiSel.o          : BtsData.h BusConnect.h OptionManager.h ComboData.h
+MultiSel.o          : CaseServer.h SelectLoadSaveServer.h SelectionServer.h
+MultiSel.o          : ComboWnd.h BarWnd.h ExportServer.h MultiSel.h
+MultiSel.o          : DrawScale.h DrawWnd.h Shell.h Menus.h RubberBand.h
+MultiSel.o          : DriverWnd.h Config.h AppInit.h UIComponent.h
+MultiSel.o          : MapProjections.h vis_proto.h visDataClient.h
+MultiSel.o          : MapServer.h LinkedList.h Link.h BaseType.h
+MultiSel.o          : PlotData.h ContourData.h contour.h Vector2d.h
+MultiSel.o          : SpeciesServer.h FormulaServer.h Formula.h DataSet.h
+MultiSel.o          : StepUI.h Domain.h DomainWnd.h Level.h Alias.h
+MultiSel.o          : StringPair.h
+MultiSel.o          : Util.h ColorLegend.h ColorChooser.h LocalFileBrowser.h
+MultiSel.o          : bus.h busClient.h busMsgQue.h busError.h busDebug.h
+MultiSel.o          : busXtClient.h busRW.h busVersion.h busRpc.h busUtil.h
+MultiSel.o          : readuam.h bts.h netcdf.h parse.h utils.h retrieveData.h
+MultiSel.o          : vis_data.h Map.h MapUtilities.h MapFile.h
+OptionManager.o     : OptionManager.h
+RGBController.o     : BasicComponent.h ColorModel.h
+RGBController.o     : RGBController.h ColorView.h UIComponent.h
+RGBView.o           : BasicComponent.h ColorModel.h
+RGBView.o           : RGBView.h TextView.h ColorView.h UIComponent.h
+ReadComboData.o     : ReadComboData.h ComboData.h
+ReadVisData.o       : BaseType.h vis_data.h Map.h MapUtilities.h
+ReadVisData.o       : MapFile.h MapProjections.h vis_proto.h
+ReadVisData.o       : ReadVisData.h MapServer.h LinkedList.h Link.h
+ReadVisData.o       : bts.h netcdf.h parse.h utils.h retrieveData.h
+ReadVisData.o       : busError.h busDebug.h busXtClient.h busRW.h
+ReadVisData.o       : busVersion.h busRpc.h busUtil.h readuam.h
+ReadVisData.o       : visDataClient.h bus.h busClient.h busMsgQue.h
+RubberBand.o        : RubberBand.h DrawScale.h Util.h
+SelectLoadSaveServer.o: BasicComponent.h bts.h vis_data.h vis_proto.h
+SelectLoadSaveServer.o: SelectLoadSaveServer.h SelectionServer.h UIComponent.h
+SelectLoadSaveServer.o: busError.h busDebug.h busXtClient.h busRW.h
+SelectLoadSaveServer.o: busVersion.h busRpc.h busUtil.h
+SelectLoadSaveServer.o: readuam.h netcdf.h parse.h utils.h
+SelectLoadSaveServer.o: retrieveData.h Util.h
+SelectLoadSaveServer.o: visDataClient.h bus.h busClient.h busMsgQue.h
+SelectionServer.o   : SelectionServer.h UIComponent.h BasicComponent.h
+SelectionServer.o   : bts.h vis_data.h vis_proto.h visDataClient.h
+SelectionServer.o   : bus.h busClient.h busMsgQue.h busError.h
+SelectionServer.o   : busDebug.h busXtClient.h busRW.h busVersion.h
+SelectionServer.o   : busRpc.h busUtil.h readuam.h netcdf.h
+SelectionServer.o   : parse.h utils.h retrieveData.h Util.h
+Shell.o             : Shell.h AppInit.h UIComponent.h BasicComponent.h
+SpeciesServer.o     : BaseType.h DataSet.h StepUI.h Domain.h DomainWnd.h
+SpeciesServer.o     : DrawScale.h DrawWnd.h Shell.h AppInit.h ReadVisData.h
+SpeciesServer.o     : MapServer.h Map.h MapUtilities.h MapFile.h MapProjections.h
+SpeciesServer.o     : Menus.h RubberBand.h LocalFileBrowser.h Level.h Alias.h
+SpeciesServer.o     : SelectLoadSaveServer.h BtsData.h
+SpeciesServer.o     : SpeciesServer.h SelectionServer.h UIComponent.h BasicComponent.h
+SpeciesServer.o     : Util.h FormulaServer.h Formula.h LinkedList.h Link.h
+SpeciesServer.o     : bts.h vis_data.h vis_proto.h visDataClient.h bus.h
+SpeciesServer.o     : busClient.h busMsgQue.h busError.h busDebug.h busXtClient.h
+SpeciesServer.o     : busRW.h busVersion.h busRpc.h busUtil.h
+SpeciesServer.o     : readuam.h netcdf.h parse.h utils.h retrieveData.h
+StepUI.o            : StepUI.h vis_proto.h vis_data.h
+StringPair.o        : StringPair.h LinkedList.h Link.h BaseType.h
+SwatchView.o        : BasicComponent.h ColorModel.h
+SwatchView.o        : SwatchView.h ColorView.h UIComponent.h
+TextView.o          : TextView.h ColorView.h UIComponent.h BasicComponent.h
+TileWnd.o           : ColorChooser.h Config.h LocalFileBrowser.h
+TileWnd.o           : LinkedList.h Link.h BaseType.h vis_data.h
+TileWnd.o           : Map.h MapUtilities.h MapFile.h MapProjections.h
+TileWnd.o           : Menus.h RubberBand.h Util.h ColorLegend.h
+TileWnd.o           : PlotData.h ContourData.h contour.h
+TileWnd.o           : Shell.h AppInit.h UIComponent.h BasicComponent.h
+TileWnd.o           : Vector2d.h
+TileWnd.o           : busMsgQue.h busError.h busDebug.h busXtClient.h
+TileWnd.o           : busRW.h busVersion.h busRpc.h busUtil.h
+TileWnd.o           : nan_incl.h TileWnd.h ReadVisData.h MapServer.h
+TileWnd.o           : readuam.h bts.h netcdf.h parse.h utils.h
+TileWnd.o           : retrieveData.h DrawScale.h DrawWnd.h
+TileWnd.o           : vis_proto.h visDataClient.h bus.h busClient.h
+UIComponent.o       : UIComponent.h BasicComponent.h
+Util.o              : Util.h
+Vector2d.o          : vis_data.h Vector2d.h
+alpha.o             : netcdf.h readuam.h vis_data.h utils.h
+busClient.o         : busClient.h busMsgQue.h busSocket.h busRW.h busRWMessage.h
+busClient.o         : busClient.h busMsgQue.h busSocket.h busRW.h busRWMessage.h
+busClient.o         : busRepReq.h busError.h busDebug.h busXtClient.h busVersion.h
+busClient.o         : busRepReq.h busError.h busDebug.h busXtClient.h busVersion.h
+busMaster.o         : busDebug.h
+busMaster.o         : busRWMessage.h busRepReq.h masterRTFuncs.h busError.h masterDB.h
+busMaster.o         : busSocket.h busMaster.h busClient.h busMsgQue.h busRW.h
+busMsgQue.o         : busMsgQue.h busDebug.h
+busMsgQue.o         : busMsgQue.h busDebug.h
+busRW.o             : busRW.h busError.h
+busRW.o             : busRW.h busError.h
+busRWMessage.o      : busError.h busDebug.h
+busRWMessage.o      : busError.h busDebug.h
+busRWMessage.o      : busMsgQue.h busClient.h busSocket.h busRW.h busRepReq.h
+busRWMessage.o      : busMsgQue.h busClient.h busSocket.h busRW.h busRepReq.h
+busRpc.o            : bus.h busClient.h busMsgQue.h busError.h busDebug.h busXtClient.h
+busRpc.o            : bus.h busClient.h busMsgQue.h busError.h busDebug.h busXtClient.h
+busRpc.o            : busRW.h busVersion.h busRpc.h busUtil.h busSocket.h busRWMessage.h
+busRpc.o            : busRW.h busVersion.h busRpc.h busUtil.h busSocket.h busRWMessage.h
+busRpc.o            : busRepReq.h
+busRpc.o            : busRepReq.h
+busSocket.o         : busMsgQue.h busSocket.h busError.h busDebug.h
+busSocket.o         : busMsgQue.h busSocket.h busError.h busDebug.h
+busTxtClient.o      : busSocket.h busClient.h busMsgQue.h busError.h busDebug.h
+busTxtClient.o      : busSocket.h busClient.h busMsgQue.h busError.h busDebug.h
+busUtil.o           : bus.h busClient.h busMsgQue.h busError.h busDebug.h busXtClient.h
+busUtil.o           : bus.h busClient.h busMsgQue.h busError.h busDebug.h busXtClient.h
+busUtil.o           : busRW.h busVersion.h busRpc.h busUtil.h
+busUtil.o           : busRW.h busVersion.h busRpc.h busUtil.h
+busXt.o             : busXtClient.h busClient.h busMsgQue.h busError.h busDebug.h
+busXt.o             : busXtClient.h busClient.h busMsgQue.h busError.h busDebug.h
+farbe2d.o           : resources.h
+free_vis.o          : netcdf.h vis_data.h
+get_info_and_data.o : netcdf.h vis_data.h toplats.h
+graph2d.o           : nan_incl.h
+map.o               : vis_proto.h vis_data.h
+map_overlay.o       : vis_data.h
+masterDB.o          : busMaster.h busClient.h busMsgQue.h masterDB.h busError.h
+masterRTFuncs.o     : busError.h busDebug.h
+masterRTFuncs.o     : busRepReq.h masterRTFuncs.h busMaster.h masterDB.h
+masterRTFuncs.o     : busSocket.h busRW.h busRWMessage.h busMsgQue.h busClient.h
+mm.o                : resources.h
+newMaster.o         : busSocket.h busMaster.h busClient.h busMsgQue.h busError.h
+newMaster.o         : busVersion.h busRW.h busDebug.h
+parse.o             : bts.h vis_data.h vis_proto.h visDataClient.h bus.h parse.h
+parse.o             : busClient.h busMsgQue.h busError.h busDebug.h busXtClient.h
+parse.o             : busRW.h busVersion.h busRpc.h busUtil.h
+parse.o             : readuam.h netcdf.h utils.h retrieveData.h
+plot_3d.o           : vis_data.h vis_proto.h
+record.o            : readuam.h vis_data.h utils.h
+recordv.o           : uamv.h vis_data.h
+retrieveData.o      : bts.h vis_data.h vis_proto.h visDataClient.h bus.h
+retrieveData.o      : busClient.h busMsgQue.h busError.h busDebug.h busXtClient.h
+retrieveData.o      : busRW.h busVersion.h busRpc.h busUtil.h
+retrieveData.o      : readuam.h netcdf.h parse.h utils.h retrieveData.h
+show_vis.o          : netcdf.h vis_data.h utils.h readuam.h
+toplats.o           : vis_data.h netcdf.h nan_incl.h utils.h readuam.h toplats.h
+uam.o               : nan_incl.h vis_data.h readuam.h
+uamv.o              : vis_data.h uamv.h resources.h
+util.o              : contour.h nan_incl.h bts.h vis_data.h vis_proto.h
+utils.noioapi.o     : bus.h busClient.h busMsgQue.h busError.h busDebug.h
+utils.noioapi.o     : busXtClient.h busRW.h busVersion.h busRpc.h busUtil.h
+utils.noioapi.o     : nan_incl.h bts.h vis_data.h vis_proto.h visDataClient.h
+utils.noioapi.o     : readuam.h netcdf.h parse.h utils.h retrieveData.h
+utils.o             : busDebug.h busXtClient.h busRW.h busVersion.h busRpc.h
+utils.o             : busUtil.h readuam.h netcdf.h parse.h utils.h retrieveData.h
+utils.o             : visDataClient.h bus.h busClient.h busMsgQue.h busError.h
+visDataClient.o     : busDebug.h busXtClient.h busRW.h busVersion.h busRpc.h
+visDataClient.o     : busUtil.h vis_data.h readuam.h
+visDataClient.o     : visDataClient.h bus.h busClient.h busMsgQue.h busError.h
+visd.o              : busDebug.h busXtClient.h busRW.h busVersion.h busRpc.h busUtil.h
+visd.o              : visDataClient.h bus.h busClient.h busMsgQue.h busError.h
+visd.o              : vis_data.h readuam.h
+xferVisData.o       : busDebug.h busXtClient.h busRW.h busVersion.h busRpc.h busUtil.h
+xferVisData.o       : visDataClient.h bus.h busClient.h busMsgQue.h busError.h
+xferVisData.o       : vis_data.h readuam.h

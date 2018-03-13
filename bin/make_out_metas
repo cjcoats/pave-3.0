@@ -1,0 +1,71 @@
+#!/bin/csh -f
+
+# Script to generate UAM-V output meta files for visualizing with PAVE
+#
+# Created by: Alison Eyth
+#             MCNC--North Carolina Supercomputing Center
+#             April 16, 1996
+#
+# This script will create metafiles for the UAM-V output files for a given
+# scenario.  The script may need to be modified slightly for strategy 
+# modeling.
+
+setenv DPATH     /afs/ncsc.org/proj/otag/uamv
+setenv SCEN      basA1
+setenv EPIS      jul93
+set    days =    ( 20 21 22 23 24 25 26 27 28 29 30 )
+setenv MONTH     jul
+setenv MO        07
+setenv YR        93
+setenv LOC       mc
+setenv OUT_DIR   $DPATH/$EPIS/output/$SCEN
+setenv OUTB_DIR  $OUT_DIR/bin
+
+set    ftypes =  ( avrg inst )
+ 
+setenv METADIR $OUT_DIR/outmeta
+if (! -d $METADIR ) mkdir -p $METADIR
+echo "Placing metafiles in $METADIR"
+
+foreach d ($days)
+
+   set epi_day = $d$MONTH$YR-$YR
+
+   foreach ftype ($ftypes)
+
+      # make links for coarse grid files that don't need metafiles (for 
+      # convenience)
+      set f = $ftype.cc.$epi_day.$LOC.$YR$SCEN
+
+      /bin/rm -f $METADIR/$f
+      ln -s $OUTB_DIR/$f $METADIR/$f
+
+      # Make fine grid average metafile
+      set f = $ftype.ff.$epi_day.$LOC.$YR$SCEN
+
+      echo "Creating file $f.meta"
+
+      if ($ftype == inst) then
+         set uamvtype = FineGridInstant
+      else
+         set uamvtype = FineGridAverage
+      endif
+
+      cat << -eof- > $METADIR/$f.meta
+#! UAMV DESCRIPTION FILE 
+UAMV_FILE $OUTB_DIR/$f
+UAMV_TYPE  $uamvtype
+NCOLS      137
+NROWS      110
+LEVELS     7
+XORG       -92.0
+YORG       32.0
+DLON       0.16058394
+DLAT       0.10909091
+FINE_GRID  1
+TITLE      $uamvtype
+-eof-
+
+   end
+
+end

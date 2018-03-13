@@ -1,0 +1,203 @@
+#! /bin/csh -f
+#
+#  Script to run PAVE
+#  Copyright 2018 Carlie J. Coats, Jr., Ph.D.
+#  Released under the GNU General Public License, Version 2
+#
+# Script version "$Id: pave 83 2018-03-12 19:24:33Z coats $"
+#
+#  Environment Variables to control "pave":
+#
+#       TERMINAL                        run PAVE in this detached terminal, or if NONE, run in foreground
+#       MISSING_DATA_COLOR
+#       WIDTH, HEIGHT                   tile-plot size, pixels (default 1200x900)
+#       PRECLIP_[ LL UR ][ LAT LON ]    Map pre-clip boundaries
+#       PAVE_DISTINCT_STATE_COUNTIES    State-map overlays county-map
+#       NATIONS_MAP, WORLD_MAP          configure to use map OUTLNATIONS
+#       MAP_FILE                        map-file to use
+#       DEBUG                           Run PAVE under a debugger
+#       PAVE_DIR                        Alternate PAVE base directory
+#       PAVE_BINDIR                     Alternate PAVE programs directory
+#       PAVE_MAPDIR                     Alternate PAVE map directory
+#       PAVE_ENV                        Alternate PAVE build type
+#       PAVE_EXE                        Alternate PAVE executable
+#       
+#########################################################################
+#       Set up environment
+
+if ( $?SCRIPT_DEBUG  ) then
+    set echo
+endif
+
+if ( ! $?PAVE_DIR       ) setenv PAVE_DIR      ${HOME}/apps/pave-2.4/
+if ( ! $?PAVE_BINDIR    ) setenv PAVE_BINDIR   ${PAVE_DIR}/bin
+if ( ! $?PAVE_MAPDIR    ) setenv PAVE_MAPDIR   ${PAVE_DIR}/maps
+if ( ! $?PAVE_ENV       ) setenv PAVE_ENV      Linux2_x86_64gfort_medium
+if ( ! $?PAVE_EXE       ) setenv PAVE_EXE      ${PAVE_BINDIR}/pave.exe
+
+if ( ! $?TERMINAL       ) setenv TERMINAL   xterm
+if ( ! $?DEBUGGER       ) setenv DEBUGGER   gdb
+
+# For non-unicode xterm:
+
+setenv LANG       en_US
+setenv LC_CTYPE   en_US
+setenv LC_CTYPE   C
+
+# environment variables used by the PAVE executable:
+
+setenv BUS_APPL_NAME    PAVE
+
+setenv XENVIRONMENT     ${PAVE_DIR}/share/rcNxEDSS
+setenv XKEYSYMDB        ${PAVE_DIR}/share/XKeysymDB
+setenv TCL_ROOT         ${PAVE_DIR}
+setenv TCL_LIBRARY      ${PAVE_DIR}/lib/tcl8.4
+setenv TK_LIBRARY       ${PAVE_DIR}/lib/tk8.4
+setenv WISH             ${PAVE_DIR}/bin/wish8.4
+setenv BLT_WISH         ${PAVE_DIR}/bin/bltwish
+setenv BLT_LIB          ${PAVE_DIR}/lib/blt2.4
+setenv PAVE_BLTDIR      ${PAVE_DIR}/external_libs/blt2.4z
+setenv PLPLOT_BIN_ENV   ${PAVE_DIR}/bin
+setenv PLPLOT_LIB_ENV   ${PAVE_DIR}/lib
+setenv BUS_MASTER_EXE   $PAVE_BINDIR/busMaster
+setenv PNMDEPTH         $PAVE_BINDIR/pnmdepth
+setenv PNMTOPS          $PAVE_BINDIR/pnmtops
+setenv XWDTOPNM         $PAVE_BINDIR/xwdtopnm
+
+setenv PAVE_MOSAIC      `which firefox`
+setenv CONVERT          `which convert`
+setenv RSH              `which rsh`
+setenv BASENAME         `which basename`
+setenv CAT              `which cat`
+setenv AWK              `which awk`
+setenv GREP             `which grep`
+setenv PS               `which ps`
+setenv RM               `which rm`
+setenv MPEG_ENCODE      `which mpeg_encode`
+
+if ( ! -f ${MPEG_ENCODE} ) setenv MPEG_ENCODE $PAVE_BINDIR/mpeg_encode
+
+##########################################################################
+#  customizations:
+
+if ( ! $?MISSING_DATA_COLOR ) setenv MISSING_DATA_COLOR 5263440
+
+if ( $?WIDTH  ) then
+    set width = ${WIDTH}
+else
+    set width  = 1200
+endif
+
+if ( $?HEIGHT ) then
+     set height = ${HEIGHT}
+else
+    set height = 900
+endif
+
+#  Default CONUS+Europe pre-clip for map:
+
+if ( ! $?PRECLIP_LLLAT  ) setenv PRECLIP_LLLAT  -20.0
+if ( ! $?PRECLIP_URLAT  ) setenv PRECLIP_URLAT   80.0
+if ( ! $?PRECLIP_LLLON  ) setenv PRECLIP_LLLON -150.0
+if ( ! $?PRECLIP_URLON  ) setenv PRECLIP_URLON  120.0
+
+if ( ! $?PAVE_DISTINCT_STATE_COUNTIES ) setenv PAVE_DISTINCT_STATE_COUNTIES 1
+
+set MAP = ""
+
+#  for ISO-6709-compliant Lat-Lon coordinates
+if ( $?NATIONS_MAP ) then
+    set MAP = "-mapName ${PAVE_MAPDIR}/OUTLNATIONS"
+endif
+
+# for WMO SO-6709-non-compliant 0<=LON<360 coordinates
+if ( $?WORLD_MAP ) then
+    setenv PRECLIP_LLLAT -90.0
+    setenv PRECLIP_URLAT  90.0
+    setenv PRECLIP_LLLON   0.0
+    setenv PRECLIP_URLON 360.0
+    set MAP = "-mapName ${PAVE_MAPDIR}/OUTLNATIONS"
+endif
+
+# generic map-file:  either full path or file-name in $PAVE_MAPDIR:
+if ( $?MAP_FILE ) then
+    if ( -f ${MAP_FILE} ) then
+        set MAP = "-mapName ${MAP_FILE}"
+    else if ( -f ${PAVE_MAPDIR}/${MAP_FILE} ) then
+        set MAP = "-mapName ${PAVE_MAPDIR}/${MAP_FILE}"
+    else
+        echo "Map file ${MAP_FILE} not found"
+    endif
+endif
+
+
+#########################################################################
+#       Check files:
+setenv KILL_BUS_PID  ""
+if ( $?PAVE_USE_BUS ) then
+   if ( -f $BUS_MASTER_EXE ) then
+       rm -f /tmp/sbus*$USER
+       echo "Starting up the software bus..."
+       $TERMINAL  -name "SW Bus Msgs" -title BUS -bg wheat -fg black -iconic -e $BUS_MASTER_EXE &
+       setenv KILL_BUS_PID  "kill $!"
+   endif
+endif
+
+
+#########################################################################
+#       ACTUALLY SET UP AND RUN THE PAVE EXECUTABLE
+#       with the specified config-file, etc.
+
+set cfg = ${PAVE_DIR}/share/pave.${1}.config
+if  ( -e $cfg ) then
+    set CONFIG="-configFile ${cfg}"
+    shift
+else
+    set CONFIG=""
+endif
+
+if ( ! $?SBUS_EXEC_RC ) then
+    if ( ! -f $HOME/.pave_exec_rc ) then
+        echo "Creating $HOME/.pave_exec_rc ..."
+        echo "############################################"             >& $HOME/.pave_exec_rc
+        echo "# .pave_exec_rc"                                          >> $HOME/.pave_exec_rc
+        echo "# The file corresponding to env variable SBUS_EXEC_RC"    >> $HOME/.pave_exec_rc
+        echo "# This file contains the executable name for a corresponding module name" >> $HOME/.pave_exec_rc
+        echo "# If you want to customize the file, copy the file into your work area"   >> $HOME/.pave_exec_rc
+        echo "#    setenv SBUS_EXEC_RC "pathname of file in your work area""            >> $HOME/.pave_exec_rc
+        echo "############################################"             >> $HOME/.pave_exec_rc
+        echo "Help ${PAVE_DIR}/scripts/mosaic.wrapper"                  >> $HOME/.pave_exec_rc
+        echo "# Uncomment next line if you want to run the Browser without the Console" >> $HOME/.pave_exec_rc
+        echo "#Browser ${PAVE_DIR}/scripts/browser.wrapper"             >> $HOME/.pave_exec_rc
+        echo "pave ${PAVE_DIR}/scripts/pave.wrapper"                    >> $HOME/.pave_exec_rc
+    endif
+endif
+
+if ( $?DEBUG ) then
+
+    ${DEBUGGER} $PAVE_EXE -width ${width} -height ${height} ${MAP} ${CONFIG} $*
+    ${KILL_BUS_PID}
+
+else if ( ${TERMINAL} == 'NONE' ) then
+
+    $PAVE_EXE -width ${width} -height ${height} ${MAP} ${CONFIG} $*
+    ${KILL_BUS_PID}
+
+else
+
+    set UI = /tmp/PAVE.$$
+    echo "#! /bin/csh -f"                                                   >& ${UI}
+    echo "$PAVE_EXE -width ${width} -height ${height} ${MAP} ${CONFIG} $*"  >> ${UI}
+    echo "${KILL_BUS_PID}"                                                  >> ${UI}
+
+    chmod ug+x ${UI}
+
+    ${TERMINAL} -name PAVE -title PAVE -bg moccasin -fg black -geometry 80x32-0+0  -fn '-*-lucidatypewriter-bold-r-*-*-12-*-*-*-*-*-*-*' -e ${UI} &
+
+endif
+
+exit( 0 )
+
+
+
+
