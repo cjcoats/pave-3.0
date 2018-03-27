@@ -21,5 +21,5 @@ tar xvfj ${TARS}/tcl8.4.9-src.tar.bz2
 tar xvfj ${TARS}/tk8.4.9-src.tar.bz2
 tar xvfj ${TARS}/BLT2.4z.tar.bz2
 tar xvfj ${TARS}/proj-4.9.3.tar.g
-tar xvfj ${TARS}/plplot4p99i.tar.bz2
+tar xvfj ${TARS}/plplot4.99i.tar.bz2
 tar xvfj ${TARS}/plplot-5.13.0.tar.bz2
