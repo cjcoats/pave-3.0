@@ -1,0 +1,283 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>PAVE Installation</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.01Gold (X11; U; SunOS 5.5 sun4m) [N
+etscape]">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+
+
+<P align=center>
+<H1>PAVE Installation &mdash; Version 3.0 </H1>
+
+
+
+<H2><A NAME="TOC">Table of Contents</A> </H2>
+<OL>
+    <LI><A HREF="#down"   >Download</A>
+    <LI><A HREF="#default">Default Installation</A>
+    <LI><A HREF="#compile">(Re-)Compiling PAVE Source</A>
+    <LI><A HREF="#extern" >Building External Libraries</A>
+</OL>
+
+<P>
+<HR> <!----------------------------------------------------------------->
+<H2><A NAME="down">Download</A> </H2>
+
+    <BLOCKQUOTE>
+    PAVE is available on GitHub from
+    <A HREF="https://github.com/cjcoats/pave-3.0"><VAR>&lt;https://github.com/cjcoats/pave-3.0&gt;</VAR></A>.
+    To install a copy of this source code from GitHub, go to the
+    directory under which do the installation (the default is
+    <VAR>${HOME}/apps/</VAR>; to use another directory, you'll
+    have to make a few edits, as described in the next section.)
+    
+    and then do the command
+    <PRE>
+    git clone https://github.com/cjcoats/pave-3.0
+    </PRE>
+    This will create and populate a directory <VAR>pave-3.0</VAR> with
+    sub-directories <VAR>bin</VAR>, <VAR>include</VAR>, <VAR>info</VAR>,
+    <VAR>lib</VAR>, <VAR>man</VAR>, <VAR>maps</VAR>,  <VAR>share</VAR>,
+    and <VAR>src</VAR>, as well as files  <VAR>pave-3.0/AAREADME</VAR>, 
+    <VAR>pave-3.0/COPYRIGHT</VAR>,  <VAR>pave-3.0/GPL.txt</VAR>, and
+    <VAR>pave-3.0/INSTALL</VAR>.
+    <P>
+    
+    Note that this release also contains program <VAR>arc2mcidas</VAR>
+    used for converting map-formats from ARC format to the MCIDAS format
+    used by PAVE.
+    <P>
+
+    <A HREF="#TOC"><EM>Return To <STRONG>Table of Contents</STRONG></EM></A>
+    </BLOCKQUOTE>
+
+<HR> <!----------------------------------------------------------------->
+<H2><A NAME="default">Default Installation</A> </H2>
+
+    <BLOCKQUOTE>
+    The Git-hub distribution contain (ideally) all the resources
+    necessary to run on a current 64-bit x86 Linux system.  These
+    resources are built &quot;as statically a possible&quot;, so that
+    the executables should run on most systems unchanged.  All that will
+    be necessary is to &quot;twiddle&quot; a few directory paths ini
+    various files.
+    <P>
+
+    Suppose you've installed pave-3.0 under directory <VAR>FOO</VAR> as
+    above (where <VAR>FOO</VAR> is not <VAR>${HOME}/apps/</VAR>),
+    creating directory <VAR>FOO/pave-3.0</VAR>.  Let us call the
+    resulting directory <VAR>PAVE_DIR</VAR>.  You will need to edit the
+    following files so that the value of shell-variable
+    <CODE>PAVE_DIR</CODE> is now the correct <VAR>FOO/pave-3.0</VAR>
+    <BLOCKQUOTE><VAR>
+        pave-3.0/bin/ASSIGNS.csh<BR>
+        pave-3.0/bin/PAVE.csh<BR>
+        pave-3.0/bin/pave<BR>
+        pave-3.0/src/Makeinclude<BR>
+    </VAR></BLOCKQUOTE>
+    If your system does not have the <VAR>rxvt</VAR> terminal
+    application, you will wish to change the definition of
+    <CODE>TERMINAL</CODE> in <VAR>pave-3.0/bin/pave</VAR> to another
+    terminal application, such as <VAR>xterm</VAR>.  If you're doing
+    PAVE development, you may wish to change the definition of
+    <CODE>DEBUGGER</CODE> from <VAR>ddd</VAR> to some other debugger
+    such as <VAR>gdbg</VAR> or <VAR>kdbg</VAR>.  Note that
+    <VAR>ASSIGNS.debug.csh</VAR> and
+    <VAR>pave-3.0/src/Makeinclude.debug</VAR> set up the execution
+    environment and the build environment for a debug-compiled PAVE
+    executable.
+    <P>
+
+    If you source <VAR>pave-3.0/bin/ASSIGNS.csh</VAR>, it will put the
+    pave-wrapper script <VAR>pave</VAR> in your <CODE>PATH</CODE>, so
+    that you may run it from anywhere you like without having to specify
+    its full file-system path.   (This is not _necessary_ of course, and
+    there are tricks with <VAR>alias</VAR> to do the same sort of
+    thing...)
+    <P>
+
+    <STRONG>If you get &quot;shared library&quot; errors on your
+    system</STRONG>, you may need to recompile PAVE (below); if you're
+    using a completely different compiler system (e.g., using Intel
+    compilers), you may need to re-build/re-install the external
+    libraries and then re-compile everything (also below).
+    <P>
+
+    <A HREF="#TOC"><EM>Return To <STRONG>Table of Contents</STRONG></EM></A>
+    </BLOCKQUOTE>
+
+<HR> <!----------------------------------------------------------------->
+<H2><A NAME="compile">(Re-)Compiling PAVE Source</A> </H2>
+
+    <BLOCKQUOTE>
+    This will be done under directory <VAR>pave-3.0/src</VAR>.
+
+    PAVE normally ships with a fairly-complete set of libraries,
+    which will be found in the <VAR>pave-3.0/lib</VAR> directory
+    (as well as a few &quot;extras&quot; that turn up when you build and
+    install these external packages:
+    <BLOCKQUOTE><VAR>
+        libBLT.a<BR>
+        libX11-xcb.a<BR>
+        libX11.a<BR>
+        libXm.a<BR>
+        libXt.a<BR>
+        libioapi.a<BR>
+        libnetcdf.a<BR>
+        libplplotftk.a<BR>
+        libproj.a<BR>
+        libtcl.a<BR>
+        libtk.a<BR>
+    </VAR></BLOCKQUOTE>
+    These libraries are also built for the <VAR>Linux2_x86_64gfort_medium</VAR>
+    compiler-and-memory-model used for the PAVE executable, so
+    should not need to be re-built unless you change the memory
+    model, etc., or unless you're running on an ancient (e.g., RedHat5)
+    system.  If you do, you will need to rebuild and install the libraries
+    first; as described in the section below.
+    <P>
+
+    File <VAR>pave-3.0/src/Makeinclude</VAR> contains the definitions
+    used by <VAR>make</VAR> in order to build the PAVE executable for
+    your system.  It is currently set up to use the GNU
+    <VAR>gcc/g++/gfortran</VAR> compiler set, to assume that
+    I/O&nbsp;API 3.2 is installed under ${HOME}/ioapi-3.2 and also built
+    for  <VAR>Linux2_x86_64gfort_medium</VAR> compiler-and-memory-model,
+    and to build under directory <CODE>PAVE_DIR</CODE> =
+    <VAR>${HOME}/apps/pave-3.0</VAR>.  Files
+    <VAR>Makeinclude.template</VAR> and <VAR>Makeinclude.debug</VAR> are
+    configuration-controlled templates which can be copied to
+    <VAR>Makeinclude</VAR> and then customized for your intended
+    installation:
+    <OL>
+
+        <LI> Make sure that I/O&nbsp;API version 3.2 is built for the
+             binary compile-type you will be using.
+
+        <LI> In particular, make sure the definitions are correct
+             for <CODE>BUILD</CODE>, <CODE>PAVE_DIR</CODE>, <CODE>IOSRC</CODE>, and <CODE>IOLIB</CODE>.
+
+        <LI> It is entirely possible that your system may have
+             X-windows libraries <VAR>libX11.[so a], libXt.[so a]
+             libXm.[so a]</VAR> (most possibly in shared object
+             &quot;.so&quot; form).  If so you may want to modify the
+             definition of <CODE>EXTLIBS</CODE> to use them. 
+
+        <LI> Your edition of the C++ compiler <VAR>g++</VAR> will somewhere
+             have a <VAR>backwards</VAR> directory, so that C++ programs can 
+             use (backwards-compatible) C-style include-files.
+             Find this directory
+             <BLOCKQUOTE><VAR>
+                find /usr/include -name backwards
+            </VAR></BLOCKQUOTE>
+             and modify <CODE>CXXSTUFF</CODE> accordingly.
+    </OL>
+
+    If you are building PAVE for some different compiler-set, you
+    will need first to do the matching Models-3 I/O&nbsp;API  build (and
+    netCDF build), copy or link the <VAR>libioapi.a</VAR> and <VAR>libnetcdf*.a</VAR>
+    to <VAR>pave-3.0/lib</VAR>, and then use the I/O API's corresponding
+    <VAR>Makeinclude.$BIN</VAR> to provide the definitions used in your
+    <VAR>pave-3.0/src/Makeinclude</VAR>.  Also set make-variable <CODE>BUILD</CODE> to the
+    <CODE>BIN</CODE> used for the I/O&nbsp;API build.
+
+    Then in directory <VAR>pave-3.0/src</VAR> do the commands
+    <VAR>make dirs</VAR> followed by <VAR>make</VAR>.
+    Or for PAVE only (and not <VAR>arc2mcidas</VAR>), <VAR>cd pave-3.0/src/pave;
+    make dirs; make</VAR>.  If this fails, you will probably need to build
+    the external libraries (see section below) and then come back and re-compile.
+    <P>
+
+    <A HREF="#TOC"><EM>Return To <STRONG>Table of Contents</STRONG></EM></A>
+    </BLOCKQUOTE>
+
+<HR> <!----------------------------------------------------------------->
+<H2><A NAME="extern">Building External Libraries</A> </H2>
+
+    <BLOCKQUOTE>
+    Directory <VAR>pave-3.0/external_libs</VAR> originally contains two
+    scripts, <VAR>untar.csh</VAR> and <VAR>buildinstall.csh</VAR>, and a
+    directory <VAR>tars</VAR> that contains <VAR>bzip2</VAR>'ed
+    <VAR>tar</VAR>-files for the external libraries used.
+    <P>
+
+    <VAR>untar.csh</VAR> will uncompress/untar all of the packages under the
+    <VAR>pave-3.0/external_libs</VAR>  directory.
+    <P>
+
+    In the resulting
+    <VAR>pave-3.0/external_libs/blt2.4z/src/bltTree.c</VAR>, we need to
+    fix a bug:  the preprocessor definitions for 
+    <CODE>START_LOGSIZE</CODE> and <CODE>MAX_LIST_VALUES</CODE> from
+    lines 104 and following need to be moved ahead of the <CODE>#if
+    (SIZEOF_VOID_P == 8)</CODE>, to line 98.  (This is a bug-fix for
+    64-bit medium memory model.)
+    <P>
+
+    <VAR>buildinstall.csh</VAR> will attempt to build and install all of
+    the resulting libraries, or it may be used as a template giving
+    instructions how to configure, build, and install individual
+    libraries.  It begins with a number of <VAR>setenv</VAR> definitions
+    for directories and for use by GNU <VAR>configure</VAR>.  You will
+    need to edit these definitions to match your intended build, as well
+    as the I/O&nbsp;API build you intend to use.
+    <P>
+
+    These are followed by a sequence of commands that build that package
+    and install it under <VAR>pave-3.0/bin</VAR>,
+    <VAR>pave-3.0/lib</VAR>, etc:
+    <BLOCKQUOTE><VAR>
+        cd &lt;package-directory&gt;
+        configure &lt;options&gt;
+        make
+        make install
+        </VAR>
+        &lt;possible extra commands...&gt;
+    </BLOCKQUOTE>
+    performed in dependency-order (e.g., <VAR>tk</VAR> depends upon
+    <VAR>tcl</VAR>, so that <VAR>tcl</VAR> is built and installed
+    first).
+    <P>
+
+    The build for <VAR>plplot-5.3.1</VAR> fails on my system, but only
+    after successfully building <VAR>plrender</VAR>,
+    <VAR>plserver</VAR>, and  <VAR>pltcl</VAR>, that will be copied to
+    <VAR>pave-3.0/bin</VAR>.
+    <P>
+
+    Note that this will have the effect of building not only the
+    libraries needed by PAVE, but also a number of other libraries and
+    programs (including, for example, even the Motif Window Manger,
+    <VAR>mwm</VAR>).  That's the way the GNU <VAR>configure</VAR> script
+    works :-)
+    <P>
+
+    Note also that we are using an older <VAR>netcdf-3.6.3</VAR>
+    version, since for more current netCDF C and Fortran 4.4.x, we had
+    troubles getting <VAR>configure</VAR> to work for a
+    medium-memory-model build -- <VAR>configure</VAR> claimed it
+    couldn't figure out how many bytes were required by a
+    medium-memoryu-model C pointer ;-(   If you can fix this for a more
+    current netCDF C and Fortran (such as 4.4 or later), I would enjoy
+    hearing about it, and updating PAVE accordingly.
+    <P>
+
+    <A HREF="#TOC"><EM>Return To <STRONG>Table of Contents</STRONG></EM></A>
+    </BLOCKQUOTE>
+
+<HR> <!----------------------------------------------------------------->
+
+    <BLOCKQUOTE>
+    <A HREF="PAveManual.html#TOC"><EM>Return To <STRONG>PAVE Users Guide</STRONG></EM></A>
+    <P>
+    <A HREF="../index.html"><EM>Return To <STRONG>cjcoats.github.io</STRONG></EM></A>
+    </BLOCKQUOTE>
+
+    <PRE>
+    $Id: Pave.install.html 82 2018-03-12 19:15:51Z coats $
+    </PRE>
+
+ </BODY>
+</HTML>

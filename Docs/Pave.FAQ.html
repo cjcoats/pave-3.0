@@ -1,0 +1,1781 @@
+<HTML>
+<HEAD>
+    <TITLE>PAVE Frequently Asked Questions</TITLE>
+    <META NAME="MSSmartTagsPreventParsing" CONTENT="TRUE">
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF"
+      TOPMARGIN="15"
+      MARGINHEIGHT="15"
+      LEFTMARGIN="15"
+      MARGINWIDTH="15">
+
+<H1>
+The Package for Analysis and Visualization of Environmental data:<BR>
+Frequently Asked Questions
+</H1>
+
+<H2>Table of Contents </H2>
+
+
+    <BLOCKQUOTE>
+    Welcome to the PAVE FAQ.  If your question is not answered below,
+    please be sure to examine the <A HREF="PaveManual.html#Bugs">Known
+    Bugs and Workarounds for PAVE</A>, and the <A HREF="PaveManual">Main
+    PAVE User's Guide</A>.
+    <P>
+
+    Note that the corresponding document for PAVE-2.3 was more than a
+    decade out of date, and contained many HTML errors, as described by
+    <VAR>weblint</VAR>.  In particular, references to EDSS need to be
+    re-written.  Revising and correcting it is a non-trivial effort,
+    currently in progress...
+    <P>
+
+    <OL>
+        <LI><A HREF="#Platforms">What platforms does PAVE run on? </A>
+        <LI><A HREF="#Downloading">How do I download PAVE and install it on my system? </A>
+        <LI><A HREF="#DocLocation">Where can I find the latest PAVE documentation?</A>
+        <LI><A HREF="#FAQLocation">Where can I find the latest FAQ?</A>
+        <LI><A HREF="#Support">How can I get support for PAVE?</A>
+        <LI><A HREF="#PAVE4PC">Is PAVE available for the PC on NT or Linux?</A>
+        <LI><A HREF="#knownBugs">What are the known bugs in PAVE?</A>
+        <LI><A HREF="#QuitCopyright">How do I quit displaying PAVE's incredibly long copyright?</A>
+        <LI><A HREF="#rmedss">What if Help..User Guide doesn't bring up the User Guide?</A>
+        <LI><A HREF="#SrcCode">Can I get the source code so I can build my own version of PAVE?</A>
+        <LI><A HREF="#WorldMap">How do I use a world map?</A>
+        <LI><A HREF="#CustomMap">How do I use my own map background?</A>
+        <LI><A HREF="#IOAPI">How do I get my data into PAVE?</A>
+        <LI><A HREF="#MaxDatasets">How do I load more than 26 datasets?</A>
+        <LI><A HREF="#NoRsh">How do I view remote data if I can't rsh to the remote machine?</A>
+        <LI><A HREF="#BlackColors">What if I see black spots in a tile plot legend?</A>
+        <LI><A HREF="#GIFPSSize">How do I control the size of GIF and postscript files?</A>
+        <LI><A HREF="#UpperLayr">How do I view data for layers other than layer 1? </A>
+        <LI><A HREF="#VectorPlot">How do I view a vector plot (e.g. for wind data)?</A>
+        <LI><A HREF="#VectorTilePlot">How do I view a vector plot with another (scalar) variable in the background?</A>
+        <LI><A HREF="#VectorDensity">Why aren't all the wind vectors displayed on vector plots?</A>
+        <LI><A HREF="#VertXsect">How do I view a vertical cross-section of data? </A>
+        <LI><A HREF="#XsectWind">How do I view a vertical cross-section of vector data?</A>
+        <LI><A HREF="#ScrollOne">How do I get sliders to scroll one step at a time?</A>
+        <LI><A HREF="#SunFont">What if I get a message like "Unable to load any usable fontset" on a Sun?</A>
+        <LI><A HREF="#Average">How do I use the mean, sum, mint, and other similar operators?</A>
+        <LI><A HREF="#DECRemote">Why can't I read remote data files when running PAVE on a DEC?</A>
+        <LI><A HREF="#DefaultFonts">How can I change the default fonts used by PAVE?</A>
+        <LI><A HREF="#SuperUser">What do I do if only the super-user and the owner of the PAVE installation can run PAVE?</A>
+        <LI><A HREF="#SaveNetCDF">Why can't I read back files that I've exported as netCDF?</A>
+        <LI><A HREF="#UAMIVtime">Why can't I read UAM-IV format files produced by UAM-V?</A>
+        <LI><A HREF="#FineGrid">When do I set the FINE_GRID flag in UAM-V meta files?</A>
+        <LI><A HREF="#UTMMetaFile">How do I write a meta file for a UTM projection?</A>
+        <LI><A HREF="#MPEG">Where can I get MPEG players for viewing PAVE animations? </A>
+        <LI><A HREF="#TimeSeriesSubset">How do I create a time series plot for a single grid cell or a group of cells? </A>
+        <LI><A HREF="#ExtractTimeSeries">How can I use PAVE to extract the time-series of data for a specific pollutant at a specific grid cell?</A>
+        <LI><A HREF="#Postscript">How can I improve the resolution of postscript files produced by PAVE?</A>
+        <LI><A HREF="#PRINTER">Why does PAVE crash when I try to print a plot?</A>
+        <LI><A HREF="#BadDrawable">Why do I sometimes get the message X Error: BadDrawable when saving an image from a script?</A>
+        <LI><A HREF="#RunningAverage">How can I view the average of data over multiple time steps (e.g. an 8 hour average)?</A>
+        <LI><A HREF="#NoStartup">Why does PAVE print out some information and then crash with a segmentation fault or a memory fault?</A>
+        <LI><A HREF="#mpeg_play">Why does the mpeg_play that comes with PAVE fail on some Suns?</A>
+        <LI><A HREF="#obscuredAnimation">Why is part of the animation I saved obscured by non-PAVE windows?</A>
+        <LI><A HREF="#gridResolution">Can I use datasets with identical domain sizes but different grid resolutions in a single formula?</A>
+        <LI><A HREF="#ScientificNotation">How do I use scientific notation for numeric labels on tile plots?</A>
+        <LI><A HREF="#24bitImage">Why can't I create GIF files or MPEGs when I display PAVE back to a PC? </A>
+        <LI><A HREF="#AcceptingInput">Why won't PAVE accept the inputs I'm typing into the configure window?</A>
+        <LI><A HREF="MeshPlot8Bit">Why can't I create a mesh plot?</A>
+        <LI><A HREF="#Future">What does the future hold for PAVE?</A>
+        <P>
+        <LI><A HREF="PaveManual.html">PAVE Users Guide</VAR></A>
+        <P>
+        <LI><A HREF="../index.html">Return To <VAR>cjcoats.github.io</VAR></A>
+    </OL>
+
+    </BLOCKQUOTE>
+
+
+<HR> <!----------------------------------------------------------------->
+<P>
+
+
+
+<H2><STRONG><A NAME="Platforms">What platforms does PAVE run on? </A></STRONG></H2>
+
+    <BLOCKQUOTE>
+    The current pave-3.0 released version is intended to run on 64-bit
+    Linux platforms, using the
+    <A HREF="https://cjcoats.github.io/AVAIL.html#medium">Linux
+    medium memory model</A> and the GNU <VAR>gcc/g++/gfortran</VAR> compiler
+    set.  It should also build for most other Linux or UNIX(-like)
+    platforms, including CygWin for Windows (although I don't have such a
+    machine for building and testing it).
+    <P>
+
+    Earlier versions of the <STRONG>Package for Analysis and
+    Visualization of Environmental data </STRONG> were available for AIX
+    4.x (IBM), IRIX 5.x (SGI), Solaris 2.x (Sun),  OSF1 (DEC Alpha), and
+    HP-UX 9.x (HP), Linux 2.x, and Windows NT.
+    <P>
+    </BLOCKQUOTE>
+
+
+<P>
+<A HREF="#TOC"><EM>Return To <STRONG>Table of Contents</STRONG></EM></A>
+<P>
+<HR> <!----------------------------------------------------------------->
+<P>
+<H2><STRONG><A NAME="Downloading">
+How do I download PAVE and install it on my system?
+</A></STRONG></H2>
+
+    <BLOCKQUOTE>
+    For instructions on how to download PAVE for your workstation and
+    install it, please see
+    <A HREF="http://cjcoats.github.io/pave/Pave.install.html">
+    http://cjcoats.github.io/pave/Pave.install.html</A>.
+    <p>
+    </BLOCKQUOTE>
+
+
+<P>
+<A HREF="#TOC"><EM>Return To <STRONG>Table of Contents</STRONG></EM></A>
+<P>
+<HR> <!----------------------------------------------------------------->
+<P>
+<H2><STRONG><A NAME="DocLocation">
+Where can I find the latest PAVE documentation?
+</A></STRONG></H2>
+
+    <BLOCKQUOTE>
+    The latest PAVE documentation can be found at
+    <A HREF="http://cjcoats.github.io/pave/Pave.install.html">
+    http://cjcoats.github.io/pave/PaveManual.html</A>
+    </BLOCKQUOTE>
+
+
+
+<P>
+<A HREF="#TOC"><EM>Return To <STRONG>Table of Contents</STRONG></EM></A>
+<P>
+<HR> <!----------------------------------------------------------------->
+<P>
+<H2><STRONG><A NAME="FAQLocation">
+Where can I find the latest FAQ?
+</A></STRONG></H2>
+
+    <BLOCKQUOTE>
+    The latest PAVE FAQ can be found at
+    <A HREF="cjcoats.github.io/pave/Pave.FAQ.html">cjcoats.github.io/pave/Pave.FAQ.html</A>.
+    </BLOCKQUOTE>
+
+<HR> <!----------------------------------------------------------------->
+<P>
+<H2><STRONG><A NAME="Support">
+How can I get support for PAVE?
+</A></STRONG></H2>
+
+    <BLOCKQUOTE>
+    The <VAR>BugZilla</VAR> bug tracking system that allows you to
+    submit problems, questions, and suggestions via a web-based
+    interface is no longer available.  You may submit a problem or
+    question  via email to the current maintainer,
+    <A HREF="MAILTO:carlie@jyarborough.com">cmas@unc.edu</A>.
+    </BLOCKQUOTE>
+
+<P>
+<A HREF="#TOC"><EM>Return To <STRONG>Table of Contents</STRONG></EM></A>
+<P>
+<P>
+<HR> <!----------------------------------------------------------------->
+<P>
+<H2><STRONG> <A NAME="PAVE4PC">
+Is PAVE available for the PC on Windows or Linux?
+</A></STRONG></H2>
+
+    <BLOCKQUOTE>
+    <VAR>PAVE-3.0</VAR> targets 64-bit <VAR>x86_64</VAR> Linux, using
+    the &quot'medium memory model&quot;, so that data set size is
+    primarily limited by the amount of RAM on the computer.
+    <P>
+
+    An earlier version of PAVE was available for Windows machines with
+    Interix... the current <VAR>pave-3.0</VAR> should probably build for
+    Windows machines with CygWin-64 installed, although the current
+    maintainer does not have access to such a machine.
+    </BLOCKQUOTE>
+
+<P>
+<A HREF="#TOC"><EM>Return To <STRONG>Table of Contents</STRONG></EM></A>
+<P>
+<HR> <!----------------------------------------------------------------->
+<P>
+<H2><STRONG> <A NAME="knownBugs">
+What are the known bugs in PAVE?
+</A></STRONG></H2>
+
+    <BLOCKQUOTE>
+    The known bugs in PAVE are described in
+    <A HREF="PaveManual.html#Bugs">PaveManual.html#Bugs</A>.
+    </BLOCKQUOTE>
+
+<P>
+<A HREF="#TOC"><EM>Return To <STRONG>Table of Contents</STRONG></EM></A>
+<P>
+<HR> <!----------------------------------------------------------------->
+<P>
+<H2><STRONG> <A NAME="QuitCopyright">
+How do I quit displaying PAVE's incredibly long copyright?
+</A> </STRONG></H2>
+
+    <BLOCKQUOTE>
+    PAVE's copyright information can be displayed by typing -copyright
+    as a  command line argument, or into PAVE's standard input.  (It is
+    long because all of the copyrights for the open source software used
+    by PAVE are included.) Once you have read enough, you can quit from
+    viewing this by typing  Control-C or :q. This will return you to a
+    standard PAVE session.
+    </BLOCKQUOTE>
+
+<P>
+<A HREF="#TOC"><EM>Return To <STRONG>Table of Contents</STRONG></EM></A>
+<P>
+<HR> <!----------------------------------------------------------------->
+<P>
+<H2><STRONG> <A NAME="rmedss">
+What if Help..User Guide doesn't bring up the User Guide?
+</A> </STRONG></H2>
+
+    <BLOCKQUOTE>
+    If you try to bring up the User Guide from the Help menu, and you get a message
+    like
+    <PRE>
+/pub/storage/edss/framework/EDSS/scripts/mosaic.wrapper: No such file or directory
+    </PRE>
+    then there is a problem with one of the dot files in your home directory.  To
+    correct this, quit out of PAVE, and type
+    <PRE>
+rm ~/.edss_exec_rc
+    </PRE>
+    Restart PAVE, and try to load the User Guide again.
+    </BLOCKQUOTE>
+
+
+<P>
+<A HREF="#TOC"><EM>Return To <STRONG>Table of Contents</STRONG></EM></A>
+<P>
+<HR> <!----------------------------------------------------------------->
+<P>
+<H2><STRONG><A NAME="SrcCode">
+Can I get the source code so I can build my own version of PAVE?
+</A></STRONG></H2>
+
+    <BLOCKQUOTE>
+    Source code for PAVE will be available by April 2018 from
+    <A HREF="https://github.com/cjcoats/pave-3.0">https://github.com/cjcoats/pave-3.0</A>.
+    Note that there are a number of external  libraries that are
+    required to build PAVE from scratch.  If you are building on a
+    preexisting platform, try using the libraries and executables
+    available with the PAVE distribution for that platform - otherwise
+    you have a lot of compiling to do&mdash;see
+    <A HREF="Pave.install.html">Pave.install.html</A>
+    </BLOCKQUOTE>
+
+<P>
+<A HREF="#TOC"><EM>Return To <STRONG>Table of Contents</STRONG></EM></A>
+<P>
+<HR> <!----------------------------------------------------------------->
+<P>
+<H2><STRONG><A NAME="WorldMap">
+How do I use a world map?
+</A></STRONG></H2>
+
+    <BLOCKQUOTE>
+    As of PAVE-3.0, there are a number of new maps under
+    <VAR>pave-3.0/maps</VAR>.
+    The <VAR>pave</VAR> wrapper script supports the use
+    of two different environment variables to control world-map drawing:
+    <DL>
+        <DT><VAR>setenv NATIONS_MAP</VAR>
+        <DD>uses the <VAR>OUTLNATIONS</VAR> map, with coordinate clipping
+            in the (ISO Standard 6709) latitude range [-90,90] and
+            longitude range [-180,180].
+        <DT><VAR>setenv WORLD_MAP</VAR>
+        <DD>uses the <VAR>OUTLNATIONS</VAR> map, with coordinate clipping
+            in the (non-Standard, WMO-style)latitude range [-90,90] and
+            longitude range [0,360].
+    </DL>
+    Additionally, the command
+    <BLOCKQUOTE><VAR>
+    setenv MAP_FILE &lt;file name&gt;
+    </VAR></BLOCKQUOTE>
+    tells <VAR>pave</VAR> to use the indicated map-file, which may
+    either have an absolute path-name, or be a file in the
+    <VAR>PAVE_MAPDIR (=pave3.2/maps)</VAR> directory.
+    <P>
+
+    As of PAVE version 1.4.1, you can display a world map for
+    data whose domain falls partially or completely outside North America.
+    First, a little background on how maps are drawn in PAVE.
+    Maps are projected onto your data's grid from polylines stored
+    in lat/lon coordinates in files in the directory: <p>
+
+<PRE>
+&lt;top level PAVE dir&gt;/&lt;platform type&gt;/bin/OPTIMIZE/maps/
+</PRE>
+
+    The map files in this directory include:<p>
+
+<PRE>
+  OUTLCOUNTIES - county outlines
+      OUTLHRES - country outlines for the world
+OUTLRIVERS3000 - rivers
+ OUTLROADS3000 - roads
+OUTLSTATES3000 - high resolution state outlines
+      OUTLUSAM - medium resolution state outlines
+</PRE>
+
+    Tile plots have a Map menu item which allows you to choose which
+    one of these maps will be used in your plot.  The default is
+    medium resolution state outlines, which come from the file
+    <VAR>OUTLUSAM</VAR>.<p>
+
+    When PAVE projects the map outlines onto your plot, it first
+    "pre-clips" out many of the polylines in the file before
+    projecting them.  In this way, significant trigonometric
+    calculations can be avoided on lines that wouldn't show up
+    on your plot anyway.  The default pre-clip range is as follows:<p>
+
+<PRE>
+	llLat =   10.0
+	llLon = -125.0
+	urLat =   80.0
+	urLon =  -60.0
+</PRE>
+
+    Lines falling outside of the pre-clip range will not be
+    drawn on your PAVE plot.  So any domain which partially
+    or completely falls outside of this default pre-clip range
+    will have an incomplete map when rendered within a default
+    PAVE tile plot.  The way to get around this is two-fold: first
+    you will need to modify the default pre-clip range used by PAVE,
+    and second you'll need to tell PAVE to use the world map rather
+    than the default medium resolution state outlines.<p>
+
+    <STRONG>To modify the default pre-clip range used by PAVE</STRONG>, you can
+    use either 1) environment variables set prior to launching PAVE,
+    2) command line arguments sent to PAVE at startup, or 3)
+    arguments sent to PAVE's standard input after startup.  First,
+    choose a clipping range (bounded by lower-left and upper-right
+    latitude, longitude coordinate pairs) that will enclose the
+    entire geographic domain of your dataset.  To use environment
+    variables, enter the following commands at the command line
+    prior to launching PAVE:<p>
+
+<PRE>
+	setenv PRECLIP_LLLAT &lt;llLat&gt;
+	setenv PRECLIP_LLLON &lt;llLon&gt;
+	setenv PRECLIP_URLAT &lt;urLat&gt;
+	setenv PRECLIP_URLON &lt;urLon&gt;
+</PRE>
+
+    Arguments used to modify the pre-clip range used by PAVE, are of the
+    form:<p>
+
+<PRE>
+	-preClip &lt;llLat&gt; &lt;llLon&gt; &lt;urLat&gt; &lt;urLon&gt;
+</PRE>
+
+    In either of the above cases, all subsequent tile plots in that PAVE
+    session will use the newly supplied default clipping  range until
+    the range is changed again.<p>
+
+    <STRONG>To tell PAVE to use the world map rather than the default
+    medium resolution state outlines</STRONG>, there are two methods.
+    One way is to use the <VAR>-mapName</VAR> command line argument with
+    the full pathname/filename to the <VAR>OUTLHRES</VAR> file :<p>
+<PRE>
+-mapName "&lt;pathname&gt;/&lt;mapFileName&gt;"
+</PRE>
+    causes PAVE to use the supplied map name instead of the
+    default map for all subsequent tile plots.
+    An easier way to obtain the same results for a given plot
+    is to simply use a tile plot's pull down "Map" menu to select
+    the world map, and that plot will then use the world map.
+    However if you are creating multiple plots of your data, you
+    will probably find the first method easier, as it affects
+    all subsequent plots rather than just a single plot.<p>
+
+    <STRONG>Here is an example script</STRONG> which was used to create
+    a tile plot with a dataset whose domain stretches from
+    North America over to Europe and down to North Africa:
+
+<PRE>
+#!/bin/csh
+#
+# world map example script
+#
+pave \
+-mapName \
+/pub/storage/edss/framework/EDSS/IRIX5_mips/bin/OPTIMIZE/maps/OUTLHRES \
+-preClip 0 -180 85 70 \
+-f /200p_scratch/thorpe/NA02_mc2_g0 \
+-s HFXa \
+-gtype tile
+</PRE>
+    </BLOCKQUOTE>
+
+<P>
+<A HREF="#TOC"><EM>Return To <STRONG>Table of Contents</STRONG></EM></A>
+<P>
+<HR> <!----------------------------------------------------------------->
+<P>
+<H2><STRONG><A NAME="CustomMap">
+How do I use my own map background?
+</A></STRONG></H2>
+
+    <BLOCKQUOTE>
+    PAVE maps are stored in a binary format called McIDAS.
+    McIDAS is a tricky little format, but it is very efficient space wise.
+    The data itself is a series of polylines in lat/lon coordinates.
+    You can specify for PAVE to use a different McIDAS map background
+    file by using PAVE's -mapName argument. <p>
+
+    There is now a utility called <VAR>arc2mcidas</VAR> that
+    allows you to translate ArcInfo '.gen' files with
+    map line data into the McIDAS format, and then
+    read it into PAVE.  <VAR>arc2mcidas</VAR> is distributed
+    with the latest PAVE release; you should be able to find it in <p>
+    <PRE>
+&lt;top level PAVE dir&gt;/&lt;platform type&gt;/bin/OPTIMIZE/<VAR>arc2mcidas</VAR>
+    </PRE><p>
+
+    The <VAR>arc2mcidas</VAR> input .gen format is pretty simple to get
+    your data into, if you don't already have ArcInfo to generate that
+    kind of file for you.  Here is an excerpt from a sample .gen file:
+
+<PRE>
+-----EXCERPT BEGINS AFTER THIS LINE-----
+1
+ -85.684761         34.982353
+ -85.683899         34.990894
+END
+2
+ -85.691048         34.946201
+ -85.688698         34.947845
+ -85.685623         34.953197
+ -85.684258         34.958153
+ -85.682869         34.963562
+ -85.683784         34.967682
+ -85.684746         34.970894
+ -85.684639         34.973164
+ -85.684547         34.974976
+ -85.684479         34.976337
+ -85.684433         34.977245
+ -85.684341         34.979057
+ -85.684814         34.980892
+ -85.684761         34.982353
+END
+------------END EXCERPT-----------------
+</PRE>
+
+    The format of the .gen files used as input to the
+    <VAR>arc2mcidas</VAR> program is simply some arbitrary number
+    of polylines, each polyline's data is denoted by:
+<PRE>
+-------------------------------------------------
+&lt;integer polyline number&gt;
+  &lt;float lat1&gt; &lt;float lon1&gt;
+  &lt;float lat2&gt; &lt;float lon2&gt;
+  :
+  :
+  &lt;float lastlat&gt; &lt;float lastlon&gt;
+END
+-------------------------------------------------
+</PRE>
+    where the polyline number is totally ignored by <VAR>arc2mcidas</VAR>,
+    and the lons are negative in the western hemisphere, the lats
+    negative in the southern hemisphere, and every lat and lon
+    must have a decimal in it.  (note the ---- lines aren't part
+    of the file format). <p>
+
+    See the <A HREF="#WorldMap">How do I use a world map?</A>
+    FAQ question for more information on using different maps
+    within PAVE. <p>
+    </BLOCKQUOTE>
+
+
+<P>
+<A HREF="#TOC"><EM>Return To <STRONG>Table of Contents</STRONG></EM></A>
+<P>
+<HR> <!----------------------------------------------------------------->
+<P>
+<H2><STRONG><A NAME="IOAPI">How do I get my data into PAVE?</A></STRONG></H2>
+
+<BLOCKQUOTE>
+    PAVE currently supports four input file formats: IO/API (netCDF), UAM-IV, UAM-V,
+    and "chain files".  These formats are further described in PAVE's User Guide,
+    at <A HREF="PaveManual#Data">PaveManual#Data</A>.
+    <p>
+
+    If you have another data format which you would like to look at using PAVE,
+    you should probably convert it into Models-3 I/O&nbsp;API format.
+    There are a number of I/O&nbsp;API &quot;m3tools&quot; programs
+    which can either do the task directly or which could be adapted to
+    serve your needs.  See
+    <A
+
+HREF="https://cjcoats.github.io/ioapi/AA.html#tools">https://cjcoats.github.io/ioapi/AA.html#tools</A>
+    </BLOCKQUOTE>
+
+<P>
+<A HREF="#TOC"><EM>Return To <STRONG>Table of Contents</STRONG></EM></A>
+<P>
+<HR> <!----------------------------------------------------------------->
+<P>
+<H2><STRONG> <A Name="NoRsh">How do I view remote data if I can't rsh to the remote
+machine?</A></STRONG></H2>
+
+Viewing remote data is easiest if you can rsh to the remote machine.  Once your
+set up is correct (see the Requirements for Use section of the PAVE User
+Guide), all you should need to do is to click on the button in the center of
+the EDSS File Browser and pick a different machine on which to browse data.
+However, things are more complicated (but not impossible) if you can't rsh to
+the machine.  <p>
+
+First, you need to configure your account on the <STRONG>remote machine</STRONG>.
+(This should only need to be done once if you usually run PAVE on the same local
+machine.)  To do this, add the following to your ~/.cshrc on that machine:<p>
+<UL>
+<LI>setenv EDSS_HOST <i>your_local_machine_name</i>
+<LI>setenv EDSS_HOST_USER <i>your_local_userid</i>
+<LI>setenv EDSS_HOST_IP <i>IP_address_for_your_local_machine</i>
+<LI>setenv EDSS_DIR <i>dir_where_PAVE_is_installed</i>
+<LI>source $EDSS_DIR/scripts/setup_edss
+</UL><p>
+
+Here the local_machine is the machine on which you will be running the  PAVE
+user interface.  To have the changes take effect, type source ~/.cshrc on the
+remote machine.  Type `which visd` on the remote machine and make sure it
+returns a directory name.  If it doesn't, then the setup_edss script on the
+remote machine may not be properly configured.<p>
+
+To get started viewing remote data,<p>
+<UL>
+<LI> start pave on the local machine
+<LI> let <i>myport</i> be the contents of /tmp/sbus_port_$USER on the local machine
+<LI> log on to the <STRONG>remote machine</STRONG>, and type start_edss_daemons -port
+<i>myport</i> all
+</UL><p>
+
+If things have worked properly, you should see some messages appear on the
+remote machine.  You should then be able to browse remote data on that machine.
+To choose the remote machine for browsing files, click on the button in the
+center of the browser (below the file and directory lists) and type in a
+host.<p>
+
+<STRONG>For example</STRONG>, assume the local machine = tom.ncsc.org, the local user
+ID is george, and the remote machine=flyer.ncsc.org.<p>
+
+<UL>
+<LI>On flyer: vi ~/.cshrc
+<LI>setenv EDSS_HOST tom.ncsc.org
+<LI>setenv EDSS_HOST_USER george
+<LI>setenv EDSS_HOST_IP 201.27.302.16
+<LI>setenv EDSS_DIR /usr/local/PAVE
+<LI>source $EDSS_DIR/scripts/setup_edss
+<LI>On tom, more /tmp/sbus_port_george gives: 47293; so on flyer I type <br>
+    start_edss_daemons -port 47293 all
+</UL>
+<p>
+Note that you will need to do the last step only each time you want to browse
+data with a new PAVE session.
+
+
+<HR> <!----------------------------------------------------------------->
+<P>
+<H2><STRONG><A NAME="MaxDatasets">
+How do I load more than 26 datasets?
+</A></STRONG></H2>
+
+    <BLOCKQUOTE>
+    Currently, the maximum number of datasets that can be loaded into
+    PAVE is 26.  There are no plans to increase this in the future.  If
+    you try to load in more datasets such that the letter that will be
+    associated with a new data set is higher than z, bad things will
+    happen. In this situation you need to delete  some data sets and
+    restart PAVE. <p>
+    </BLOCKQUOTE>
+
+<P>
+<A HREF="#TOC"><EM>Return To <STRONG>Table of Contents</STRONG></EM></A>
+<P>
+<HR> <!----------------------------------------------------------------->
+<P>
+<H2><STRONG><A NAME="BlackColors">
+What if I see black spots in a tile plot legend?
+</A></STRONG></H2>
+
+    <BLOCKQUOTE>
+    Sometimes, PAVE is unable to allocate a color that it tried to allocate.  In
+    this case, you will see black regions appear in the legend of your tile plot.
+    This situation usually occurs when you have gone back and forth between
+    different color maps or adjusted the # Tiles slider multiple times.  This is
+    often accompanied by a message to standard output that says "Can't allocate
+    ramp color xxx".  To clear this situation, exit and restart PAVE.  Note that
+    the number of available colors can be affected by other applications running on
+    your workstation that are using colors (such as netscape or mosaic).  You
+    can control the number of colors used by netscape with the -ncols command
+    line argument.  PAVE and netscape coexist better if you run netscape in the
+    following way:
+<PRE>
+netscape -ncols 64
+</PRE>
+    If you cannot get enough colors by restarting PAVE, try quitting
+    other applications that use a lot of colors and then restart
+    PAVE.<p>
+    </BLOCKQUOTE>
+<P>
+<A HREF="#TOC"><EM>Return To <STRONG>Table of Contents</STRONG></EM></A>
+<P>
+<HR> <!----------------------------------------------------------------->
+<P>
+<H2><STRONG><A NAME="GIFPSSize">
+How do I control the size of GIF and postscript
+files output from PAVE?
+</A></STRONG></H2>
+
+    <BLOCKQUOTE>
+    You can adjust the size of the GIF and postscript images produced by PAVE by
+    resizing the Tile Plot window before saving a GIF or postscript file.
+    Also, the following command line arguments have been added to PAVE, to allow
+    the user to control a tile or vector plot's height and/or width in pixels:<p>
+
+<PRE>
+	-height &lt;tile plot height in pixels&gt;
+	-width &lt;tile plot width in pixels&gt;
+</PRE><p>
+
+    All subsequent plots will use the supplied value for height/width, until
+    a non-positive value is supplied as a subsequent argument.  At that point
+    PAVE's default height/width will be used.<p>
+    </BLOCKQUOTE>
+
+
+<p>
+<P>
+<A HREF="#TOC"><EM>Return To <STRONG>Table of Contents</STRONG></EM></A>
+<P>
+<HR> <!----------------------------------------------------------------->
+<P>
+<H2><STRONG> <A NAME="UpperLayr">
+How do I view data for layers other than layer 1?
+</A></STRONG></H2>
+
+    <BLOCKQUOTE>
+    To view data for a layer other than Layer 1, first click on the
+    dataset in the  Dataset_popup for which you would like to view the
+    other layers of data. Then under the Datasets menu, choose "Select
+    Layer Ranges Matching  Current Dataset".  If the selected dataset
+    has more than one layer, you should  see a window with sliders for
+    the highest and lowest layers to use.  Set these  both to the layer
+    that you would like to see (i.e. they should have the same  value).
+    You can then draw a plot with any of the standard plot types from
+    the Graphics menu.  Note that all formulas that refer to the
+    selected dataset will be changed to refer to the new layers.
+    </BLOCKQUOTE>
+
+<P>
+<A HREF="#TOC"><EM>Return To <STRONG>Table of Contents</STRONG></EM></A>
+<P>
+<HR> <!----------------------------------------------------------------->
+<P>
+<H2><STRONG> <A Name="VectorPlot">
+How do I view a vector plot (e.g. for wind data)?
+</A></STRONG></H2>
+
+    <BLOCKQUOTE>
+    To view a vector plot, first load and select the data set that contains the
+    vector data.  Let's assume that this is wind data for this example.
+    Next, click on each of the vector "species" in the species list for the
+    file (e.g. UWINDa and VWINDa) to add them to the formula list.
+    Then, paste a line like this into the window from which you started
+    PAVE (i.e. PAVE's standard input):
+<PRE>
+-vector UWINDa VWINDa
+</PRE>
+    This will cause PAVE to draw a basic vector plot.  By default the plot will
+    appear with fixed length vectors.  You can make the vectors scaled by their
+    size using the Configure window for the vector plot - click on "Scale
+    Vectors".
+    <p>
+
+    If you are doing a vector plot from a script, you must enter the following
+    commands before the -vector command:
+    <p>
+<PRE>
+-s UWINDa
+-s VWINDa
+</PRE>
+    </BLOCKQUOTE>
+
+<P>
+<A HREF="#TOC"><EM>Return To <STRONG>Table of Contents</STRONG></EM></A>
+<P>
+<HR> <!----------------------------------------------------------------->
+<P>
+<H2><STRONG> <A name="VectorTilePlot">
+How do I view a vector plot with another (scalar) variable in the background?
+</A></STRONG></H2>
+
+    <BLOCKQUOTE>
+    You can plot a variable in the background behind the vectors of a
+    vector plot (but the other variable must be on the same grid).  For
+    example, if you  loaded in a temperature data set for the same grid
+    that the wind data is on,  you can paste a line like the following
+    into PAVE's standard input:
+<PRE>
+-vectorTile TMPRh UWINDa VWINDa
+</PRE>
+
+    and you will get a plot with wind vectors in the foreground and
+    color temperature data as tiles in the background.  A more common
+    use might be to plot wind speed in the background like this:
+<PRE>
+-s UWINDa
+-s VWINDa
+-s "sqrt(UWINDa*UWINDa+VWINDa*VWINDa)"
+-vectorTile "sqrt(UWINDa*UWINDa+VWINDa*VWINDa)" UWINDa VWINDa
+</PRE>
+
+    The first lines add the formulas for the scalar wind compenents and
+    the wind  speed to the formula list, and the last line draws the
+    plot.  This way you can show wind direction with fixed length vector
+    and wind speed in the background.
+    <p>
+
+    Note that you don't have to "type" the lines into standard input -
+    you  can copy and paste them with your X-windows system (with the
+    middle mouse button  if you're using <VAR>xterms</VAR>).
+    <p>
+    </BLOCKQUOTE>
+
+<P>
+<A HREF="#TOC"><EM>Return To <STRONG>Table of Contents</STRONG></EM></A>
+<P>
+<HR> <!----------------------------------------------------------------->
+<P>
+<H2><STRONG> <A NAME="VectorDensity">
+Why aren't all the wind vectors displayed on vector plots?
+</A></STRONG></H2>
+
+    <BLOCKQUOTE>
+    In versions prior to 1.6, PAVE used an algorithm to "thin" the
+    vectors displayed on a plot so that the plot looked nice.  However,
+    some users found this limiting / confusing.  In version 1.6, all
+    vectors are displayed by default, but a command line argument is now
+    available for plotting every n vectors.
+    </BLOCKQUOTE>
+
+<P>
+<A HREF="#TOC"><EM>Return To <STRONG>Table of Contents</STRONG></EM></A>
+<P>
+<HR> <!----------------------------------------------------------------->
+<P>
+<H2><STRONG><A NAME="VertXsect">
+How do I view a vertical cross-section of data?
+</A></STRONG></H2>
+
+    <BLOCKQUOTE>
+    To view a vertical cross section of data using the Tile Plot, first
+    select the dataset in the Dataset List for which you would like to
+    view the cross  section. Then under the datasets menu, choose
+    "Select Layer Ranges Matching  Current Dataset".  You should see a
+    window with sliders for the highest and  lowest layers to use.  Set
+    these appropriately depending on which layers you  want to see.  To
+    see a vertical cross section, the lowest and highest should be
+    different layers (as opposed to just plotting a horizontal cross
+    section -  in that case the min and max layers are set to the same
+    value). <I>[Note that you can also select a layer range for a
+    <STRONG>formula</STRONG> using the corresponding  options under the
+    Formulas menu.]</I>
+    <p>
+
+    After selecting the layers you want to see, type a statement of the
+    following form into PAVE's standard input:
+<PRE>
+-subdomain 80 20 80 90
+</PRE>
+    Here the arguments to -subdomain are: x1 y1 x2 y2 to define the
+    region to be selected.  This will cause the data where x = 80, and y
+    is between 20 and 90 to be selected.  To see this region on the
+    screen, you can choose  "Select Regions of Interest Matching Current
+    Dataset".  A window showing  the domain will come up.
+    Alternatively, you can select the cells with the mouse, but this
+    gets difficult when grid cells are small and you want to select a
+    very  precise area.
+    <p>
+
+    Now that the layers and region to be plotted are selected, you need
+    to set the cross section type.  Under the Graphics menu, choose "Set
+    Tile Plot Cross Section Type" and you will see a submenu of X, Y, or
+    Z cross sections. To make a plot for the above example choose "X
+    Cross Section" (remember this by noting that x is constant).  Next,
+    draw the plot with a formula using your dataset by choosing "Create
+    Tile  Plot" from the Graphics menu, and you will see the plot of
+    that cross section. Currently, you cannot draw vectors on vertical
+    cross section plots.
+    </BLOCKQUOTE>
+
+<P>
+<A HREF="#TOC"><EM>Return To <STRONG>Table of Contents</STRONG></EM></A>
+<P>
+<HR> <!----------------------------------------------------------------->
+<P>
+<H2><STRONG> <A NAME="XsectWind">
+How do I view a vertical cross-section of vector data?
+</A></STRONG></H2>
+
+    <BLOCKQUOTE>
+    This is an abbreviated combination of the previous two questions (viewing
+    vector plots and viewing a vertical cross section).  In summary:
+
+    <ol>
+        <LI>Load and select a data set that contains vector data
+
+        <LI>Click on the variables you want to use for the vector plot in the
+        species list (e.g. <CODE>UWINDa, VWINDa</CODE>)
+
+        <LI>From the Datasets menu, choose "Select Layer Ranges Matching Current Dataset"
+
+        <LI>Set the sliders to the highest and lowest layers for which you want
+        to see a cross section.
+
+        <LI>Select the single row or column to plot either by typing
+        <br><VAR>-subdomain xmin ymin xmax ymax</VAR> (note that either xmin=xmax or
+        ymin=ymax for a vertical cross-section) into PAVE's standard input
+
+        <LI>Choose "Select Regions of Interest Matching Current Dataset" from the
+        Dataset menu to visualize the cross section you'll be viewing
+
+        <LI>Under the Graphics menu, pull down &quot;Set Tile Plot Cross
+        Section Type&quot;, and
+        select X Cross Section if xmin=xmax, or Y Cross Section if ymin=ymax
+
+        <LI>For a vector only plot, type a line of the form <VAR>-vector UWINDa VWINDa</VAR>
+        into PAVE's standard input; for an example of a vector plot with a tile
+        background, type <VAR> -vectorTile tile_formula UWINDa VWINDa</VAR>
+    </ol>
+    On a vertical cross-section plot of vector data, the arrows
+    displayed are actually showing horizontal direction (up for North,
+    down for South, left for West, and right for East). For more
+    information on vector plots in general, see the question about
+    viewing vector plots.<p>
+    </BLOCKQUOTE>
+
+<P>
+<A HREF="#TOC"><EM>Return To <STRONG>Table of Contents</STRONG></EM></A>
+<P>
+<HR> <!----------------------------------------------------------------->
+<P>
+<H2><STRONG><A NAME="ScrollOne">
+How do I get sliders to scroll one step at a time?
+</A></STRONG></H2>
+
+    <BLOCKQUOTE>
+    To scroll only one step in any of the sliders used in PAVE (e.g. for
+    the Hour  in the animation window, or the # Tiles on the configure
+    window), first click on the slider itself to select it, then use
+    your left or right arrow buttons to scroll one step up or down.
+    </BLOCKQUOTE>
+
+<P>
+<A HREF="#TOC"><EM>Return To <STRONG>Table of Contents</STRONG></EM></A>
+<P>
+<HR> <!----------------------------------------------------------------->
+<P>
+<H2><STRONG><A NAME="SunFont">
+What if I get a message like "Unable to load any usable fontset" on a Sun?
+</A></STRONG></H2>
+
+    <BLOCKQUOTE>
+    If you are running on a Sun whose OS has recently been upgraded, you
+    may experience problems with PAVE's font settings.  You may see
+    messages like the following:
+
+<PRE>
+Warning: Unable to load any usable fontset
+Warning: Cannot convert string "-dt-interface
+system-medium-r-normal-m*-*-*-*-*-*-*-*-*:" to type FontList
+Warning: Cannot convert string "-dt-interface
+user-medium-r-normal-m*-*-*-*-*-*-*-*-*" to type FontSet
+Warning: Unable to load any usable fontset
+Warning: Cannot convert string "-dt-interface
+user-medium-r-normal-m*-*-*-*-*-*-*-*-*:" to type FontList
+</PRE><p>
+
+    If this happens, in your <VAR>.Xdefaults</VAR> file, add the following lines:<p>
+
+<PRE>
+EDSS_Pave*background:   antiquewhite
+EDSS_Pave*foreground:   black
+EDSS_Pave*geometry:     +175+150
+EDSS_Pave*fontSet:      -b&h-lucida sans-medium-r-normal-*-*-*-*-*-*-*-*-*
+EDSS_Pave*fontList:     -b&h-lucida sans-medium-r-normal-*-*-*-*-*-*-*-*-*
+Browser*fontSet:        -b&h-lucida sans-medium-r-normal-*-*-*-*-*-*-*-*-*
+Browser*fontList:       -b&h-lucida sans-medium-r-normal-*-*-*-*-*-*-*-*-*
+</PRE><p>
+
+    This should do the trick.  Note:  you will either need to log out
+    and log back in again, or do an <VAR>xrdb ~/.Xdefaults</VAR>, in
+    order for these changes to take effect.
+    </BLOCKQUOTE>
+
+
+<P>
+<A HREF="#TOC"><EM>Return To <STRONG>Table of Contents</STRONG></EM></A>
+<P>
+<HR> <!----------------------------------------------------------------->
+<P>
+<H2><STRONG><A NAME="Average">
+How do I use the mean, sum, mint, and other similar operators?
+</A></STRONG></H2>
+
+    <BLOCKQUOTE>
+<PRE>
+&gt; Hi:
+&gt; Assuming that mean would provide average I tried and
+&gt; found that it does not work, The error is 'a formula must
+&gt; produce a grid of data' It appears that PAVE is intending to
+&gt; generate a number rather than averaging each grid cell in time.
+&gt; I a m using the data consisting of 24 hr extract as xymap*.
+&gt; Can you provide any explanation for the following mean,
+&gt; sum, mint, and maxt  which are part of PAVE formulas?
+&gt; Thanks
+</PRE><p>
+
+    The operators you mention produce a single number calculated over
+    the currently selected levels, rows, columns, and time steps for the
+    given formula.  The version of PAVE you have (PAVE 1.4beta or
+    earlier) expects to always calculate an array of data to make a plot
+    - so if your formula is something like <VAR>mean(O3a)</VAR>, you get
+    that message. If the formula is <VAR>mean(O3a)/NO2a</VAR>, you will
+    get a plot.<p>
+
+    Subsequent versions of PAVE changed how this is handled.  If you
+    make a "plot" of <VAR>mean(O3a)</VAR>, PAVE will now calculate the
+    result and display it in the PAVE message window along with
+    information about the currently selected domain from which that
+    number was calculated. <p>
+
+    Here is what the operators you mention above specifically do, along
+    with a number of other operators which also return a single
+    number:
+    <BLOCKQUOTE>
+    <DL>
+        <DT><STRONG>mean</STRONG>
+        <DD>average cell value for all cells in currently selected domain
+        <DT><STRONG>sum</STRONG>
+        <DD>sum of all cell values in currently selected domain
+        <DT><STRONG>mint</STRONG>
+        <DD>time step index with minimum value in currently selected domain
+        <DT><STRONG>maxt</STRONG>
+        <DD>time step index with maximum value in currently selected domain
+        <DT><STRONG>minx</STRONG>
+        <DD>x index with minimum value in currently selected domain
+        <DT><STRONG>maxx</STRONG>
+        <DD>x index with maximum value in currently selected domain
+        <DT><STRONG>miny</STRONG>
+        <DD>y index with minimum value in currently selected domain
+        <DT><STRONG>maxy</STRONG>
+        <DD>y index with maximum value in currently selected domain
+        <DT><STRONG>minz</STRONG>
+        <DD>z index with minimum value in currently selected domain
+        <DT><STRONG>maxz</STRONG>
+        <DD>z index with maximum value in currently selected domain
+        <DT><STRONG>nrows</STRONG>
+        <DD>number of rows in the currently selected domain
+        <DT><STRONG>ncols</STRONG>
+        <DD>number of rows in the currently selected domain
+        <DT><STRONG>nlevels</STRONG>
+        <DD>number of levels in the currently selected domain
+    </DL>
+    </BLOCKQUOTE>
+
+    where "currently selected domain" includes the currently
+    selected rows, columns, layers, and time steps.  So the
+    currently selected domain is bounded by
+    <BLOCKQUOTE><VAR>
+        (minx,miny,minz,mint)&lt;-&gt;(maxx,maxy,maxz,maxt)
+    </VAR></BLOCKQUOTE>
+
+    The min and max operators behave a little differently:<p>
+
+    <BLOCKQUOTE>
+    <DL>
+        <DT><STRONG>min</STRONG>
+        <DD>For each cell <VAR>(i,j,k)</VAR> in the currently selected domain,
+	        this calculates the minimum value for that cell
+	        over the currently selected time steps.  In other words,
+	        the minimum value in cells <VAR>(i,j,k,tmin..tmax)</VAR>.
+        <DT><STRONG>max</STRONG>
+        <DD>For each cell <VAR>(i,j,k)</VAR> in the currently selected domain,
+            this calculates the maximum value for that cell
+            over the currently selected time steps.  In other words,
+            the maximum value in cells <VAR>(i,j,k,tmin..tmax)</VAR>.
+    </DL>
+    </BLOCKQUOTE>
+
+    Prior to PAVE version 2.1 alpha, there was a way (albeit
+    cumbersome!)  to get PAVE to average each grid cell in time.  PAVE
+    has a not well-known feature which allows you to specify an hour
+    index after a variable name.  For example, <STRONG>O3a:1 is the
+    first hour of ozone</STRONG>.  So, if you wanted to plot an each
+    cell averaged in time over the first twelve hours of your data, you
+    could enter and plot the following formula:<p>
+
+<STRONG>(O3a:1+O3a:2+O3a:3+O3a:4+O3a:5+O3a:6+O3a:7+O3a:8+O3a:9+O3a:10+O3a:11+O3a:12)/12</STRONG><p>
+
+    This is cumbersome and it also uses a lot of memory
+    <p>
+
+    We currently recommend that you download the latest version of PAVE,
+    and use the <VAR>-nhouraverage</VAR> option, or from the Graphics
+    menu, select the Create NHour Average Tile Plot Menu item.<p>
+    </BLOCKQUOTE>
+
+
+<P>
+<A HREF="#TOC"><EM>Return To <STRONG>Table of Contents</STRONG></EM></A>
+<P>
+<HR> <!----------------------------------------------------------------->
+<P>
+<H2><STRONG><A NAME="DECRemote">
+Why can't I read remote data files when running PAVE on a DEC?
+</A></STRONG></H2>
+
+    <BLOCKQUOTE>
+    You can read them, however this is only through a workaround script
+    provided with the PAVE distribution in the scripts directory.  The
+    script is called decterm, and its contents are included here.  You
+    will need to modify it slightly in order to use it, according to the
+    instructions at the top of the file.<p>
+
+<PRE>
+##!/bin/ksh
+#
+# decpave - run PAVE on a dec
+#
+# Use this script if you want to run PAVE on a DEC alpha while
+# reading data on a remote machine.  There is a bug in the code
+# which prevents PAVE from successfully launching the remote
+# processes necessary to read data elsewhere.  This script
+# (which "wraps" around the pave script) takes care of launching
+# those processes for you.
+#
+# You will need to modify the following 6 lines to match your
+# remote machine name, remote login name, complete path
+# names to the remote visd and busd executables, local pave
+# script location, and complete path name to your local
+# busMaster executable.  Please see the PAVE documentation
+# if you need additional information on how to set up to
+# read data from remote machines.
+#
+REMOTEMACHINE=flyer
+REMOTELOGIN=thorpe
+REMOTEVISD=/usr/local/edss/framework/EDSS/unicos9_TS/bin/OPTIMIZE/visd
+REMOTEBUSD=/usr/local/edss/framework/EDSS/unicos9_TS/bin/OPTIMIZE/busd
+PAVE=/usr/staff/thorpe/pave/scripts/pave
+BUSMASTER=/usr/staff/thorpe/pave/OSF1_alpha/bin/OPTIMIZE/busMaster
+#
+$BUSMASTER &gt; /dev/null 2&gt;&1 &
+BUS_PID=${!}
+grep `hostname` /etc/hosts | grep -v '#' | head -1 | awk '{print $1}' | read SBUSHOST
+sleep 3
+SBUSPORT=`cat /tmp/sbus_port_$USER`
+rsh -l $REMOTELOGIN $REMOTEMACHINE env SBUSHOST=$SBUSHOST SBUSPORT=$SBUSPORT $REMOTEVISD &
+rsh -l $REMOTELOGIN $REMOTEMACHINE env SBUSHOST=$SBUSHOST SBUSPORT=$SBUSPORT $REMOTEBUSD &
+$PAVE "$@"
+echo kill $BUS_PID
+kill $BUS_PID
+</PRE>
+    </BLOCKQUOTE>
+
+<P>
+<A HREF="#TOC"><EM>Return To <STRONG>Table of Contents</STRONG></EM></A>
+<P>
+<HR> <!----------------------------------------------------------------->
+<P>
+<H2><STRONG><A NAME="DefaultFonts">
+How can I change the default fonts used by PAVE?
+</A></STRONG></H2>
+
+    <BLOCKQUOTE>
+    If you don't like the default fonts used by PAVE, you can set your
+    own fonts by putting lines like this in your <VAR>~/.Xdefaults</VAR>
+    file:<p>
+
+<PRE>
+EDSS_Pave*fontList: -*-lucida sans typewriter-*-r-*-*-14-*-*-*-*-*-*-*
+EDSS_Browser*fontList: -*-lucida sans typewriter-*-r-*-*-14-*-*-*-*-*-*-*
+</PRE>
+
+    The second line sets the font for the file browser used by PAVE.
+    After adding these to <VAR>~/.Xdefaults</VAR>, you must either
+    logout and log back in again or enter <VAR>xrdb ~/.Xdefaults</VAR>, then
+    restart PAVE for these changes to take effect.<p>
+    </BLOCKQUOTE>
+
+<P>
+<A HREF="#TOC"><EM>Return To <STRONG>Table of Contents</STRONG></EM></A>
+<P>
+<HR> <!----------------------------------------------------------------->
+<P>
+<H2><STRONG><A NAME="SuperUser">
+What do I do if only the super-user and the  owner of the PAVE
+installation can run PAVE?
+</A></STRONG></H2>
+
+    <BLOCKQUOTE>
+    If you get a segmentation fault when running PAVE, but the super-user and
+    the owner of the PAVE directories can run successfully, there is a
+    likely file permission problem.  Try changing the permissions of the
+    .pave_exe.pave_usage.log file in your installation directory to be
+    read/write for everyone.  For example, on the Sun platform, this
+    can be accomplished by <p>
+<PRE>
+	cd PAVE_DIR/SunOS5_sparc/bin/OPTIMIZE
+	chmod 666 .pave_exe.pave_usage.log
+</PRE>
+    </BLOCKQUOTE>
+
+<P>
+<A HREF="#TOC"><EM>Return To <STRONG>Table of Contents</STRONG></EM></A>
+<P>
+<HR> <!----------------------------------------------------------------->
+<P>
+<H2><STRONG><A NAME="SaveNetCDF">
+Why can't I read back files that I've exported as netCDF?
+</A></STRONG></H2>
+
+    <BLOCKQUOTE>
+    There is a problem with PAVE's Export to netCDF feature in PAVE
+    versions  prior to 1.5.  If you export  a formula more complex than
+    a single species to netCDF, PAVE names the  variable in such a way
+    that it can't read the exported dataset back in. You may be able to
+    read the dataset if you successfully update the variable name in the
+    netCDF header.  If you are having this problem and are using a
+    version prior to 1.5, please download the latest version of PAVE.
+    </BLOCKQUOTE>
+
+<P>
+<A HREF="#TOC"><EM>Return To <STRONG>Table of Contents</STRONG></EM></A>
+<P>
+<HR> <!----------------------------------------------------------------->
+<P>
+<H2><STRONG><A NAME="UAMIVtime">
+Why can't I read UAM-IV format files produced by UAM-V?
+</A></STRONG></H2>
+
+    <BLOCKQUOTE>
+    The UAM-V documentation specifies that the dates in coarse grid
+    AVERAGE and INSTANT files are Julian days.  However, in some cases,
+    these files have been generated with YYMMDD format instead of YYDDD
+    format.  Some versions of PAVE will not visualize these files if the
+    date format is not YYDDD and an error message in the form of
+<PRE>
+time must be in the range 00:00:00 1/1/1970 to 03:14:07 1/19/2038
+</PRE>
+    is printed.  Ways to work around this include: convert the file to
+    ASCII, change the date to YYDDD, then change it back to binary; or
+    if you want to look at OTAG data, try getting xymap (low level
+    ozone) files for the scenario(s) of interest.  A workaround for this
+    problem is implemented in PAVE 1.5. Please download the latest
+    version of PAVE if you are having this problem.
+    </BLOCKQUOTE>
+
+<p>
+<P>
+<A HREF="#TOC"><EM>Return To <STRONG>Table of Contents</STRONG></EM></A>
+<P>
+<HR> <!----------------------------------------------------------------->
+<P>
+<H2><STRONG><A name="FineGrid">
+When do I set the FINE_GRID flag in UAM-V meta files?
+</A></STRONG></H2>
+
+    <BLOCKQUOTE>
+    You should set the <CODE>FIND_GRID</CODE> flag in UAM-V meta files
+    only for fine grid average and instantaneous files.  The purpose of
+    this flag is to account for the extra layer of grid cells in the
+    <CODE>x</CODE> and <CODE>y</CODE> dimensions that exists in these
+    files.  The <CODE>FINE_GRID</CODE> flag should not be set for fine
+    grid meteorology files.
+    </BLOCKQUOTE>
+
+<P>
+<A HREF="#TOC"><EM>Return To <STRONG>Table of Contents</STRONG></EM></A>
+<P>
+<HR> <!----------------------------------------------------------------->
+<P>
+<H2><STRONG><A NAME="UTMMetaFile">How do I write a meta file for a UTM projection?</A></STRONG></H2>
+
+    <BLOCKQUOTE>
+    A new example has been put in the user guide.  See
+    <A HREF="PaveManual.html#UTMMetaFile">PavveManual.html#UTMMetaFile</A>. 
+    Make sure the <CODE>UTM_ZONE</CODE> follows <CODE>DX</CODE> and
+    <CODE>DY</CODE>.
+    </BLOCKQUOTE>
+
+
+<HR> <!----------------------------------------------------------------->
+<P>
+<H2><STRONG><A name="MPEG">
+Where can I get MPEG players for viewing PAVE animations?
+</A></STRONG></H2>
+
+    <BLOCKQUOTE>
+    The web site <A HREF="http://www.perry.com/resources.html">
+    http://www.perry.com/resources.html</A> has links to MPEG players.
+    </BLOCKQUOTE>
+
+<P>
+<A HREF="#TOC"><EM>Return To <STRONG>Table of Contents</STRONG></EM></A>
+<P>
+<HR> <!----------------------------------------------------------------->
+<P>
+<H2><STRONG><A name="TimeSeriesSubset">
+How do I create a time series plot for a single grid cell or a group of cells?
+</A></STRONG></H2>
+
+    <BLOCKQUOTE>
+
+    First, you must select the cell(s) of interest, then you can create the
+    plot.  Select the cell(s) of interest by choosing <STRONG>Select Regions
+    of Interest Matching Current Dataset</STRONG> (or Formula) from the <STRONG>Datasets</STRONG>
+    or <STRONG>Formulas</STRONG> menu, or you can issue a command of the following form
+    to PAVE standard input:
+    <PRE>
+-subdomain &ltxmin&gt &ltymin&gt &ltxmax&gt &ltymax&gt
+    </PRE>
+    Please see <a
+    href="PaveManual.html#Subsetting">PaveManual.html#Subsetting</A> for
+    more information on subsetting.   Once you have your subdomain of
+    one or more cells selected, you can choose <STRONG>Create Time
+    Series Line [or Bar] Plot</STRONG> from the Graphics menu.
+    </BLOCKQUOTE>
+
+<P>
+<A HREF="#TOC"><EM>Return To <STRONG>Table of Contents</STRONG></EM></A>
+<P>
+<HR> <!----------------------------------------------------------------->
+<P>
+<H2><STRONG><A NAME="ExtractTimeSeries">
+How can I use PAVE to extract the time-series of data for a specific
+pollutant at a specific grid cell?
+</A></STRONG></H2>
+
+    <BLOCKQUOTE>
+    <OL>
+        <LI>Select the layer of the variable you want using the <STRONG>Formulas...
+           Select Layer Ranges Matching Current Formula</STRONG> menu item
+           (or use the -levelRange &lt;levelMax&gt; &lt;levelMin&gt; command line argument).<p>
+        <LI>Select the single x/y cell of the variable you want using
+           the <STRONG>Formulas... Select Regions Of Interest Matching Current Formula</STRONG>
+           menu item (or use the
+           <BLOCKQUOTE><CODE>
+           -subdomain &lt;xmin&gt; &lt;ymin&gt; &lt;xmax&gt; &lt;ymax&gt;</CODE>
+           </BLOCKQUOTE>
+           command line
+           argument).<p>
+        <LI>Select the time range of the variable you want using the
+           <STRONG>Formulas....Select Time Range of Current Formula</STRONG> menu item
+           (or use the
+           <BLOCKQUOTE><CODE>-tinit &lt;initial time step&gt;<BR>
+           -tfinal &lt;final time step&gt;</CODE>
+           </BLOCKQUOTE>
+           command line arguments).<p>
+        <LI>Choose <STRONG>Export...Tabbed ASCII</STRONG> to save this data to an ASCII file
+           which you can read in using a spreadsheet.
+    </OL>
+    </BLOCKQUOTE>
+
+<P>
+<A HREF="#TOC"><EM>Return To <STRONG>Table of Contents</STRONG></EM></A>
+<P>
+<HR> <!----------------------------------------------------------------->
+<P>
+<H2><STRONG><A name="Postscript">
+How can I improve the resolution of postscript files produced by PAVE?
+</A></STRONG></H2>
+
+    <BLOCKQUOTE>
+    The PostScript format saved to by PAVE is simply a pixel map, so it
+    doesn't actually have the drawing commands in it to provide good
+    resolution on a printer.  However, one workaround you could try is
+    making your image huge.  This would provide better resolution on a
+    printer.
+    <p>
+
+    You can resize a PAVE plot window interactively, or you can control
+    the exact size of an image (height and width) using PAVE command
+    line arguments <VAR>-height</VAR> and <VAR>-width</VAR>.  If you'd
+    like to make an image really really huge (bigger than the screen,
+    for example), you'd need to use this method.  See the PAVE
+    documentation at
+    <A HREF="PaveManual.html#Scripting">PaveManual.html#Scripting</A>
+    for further information on the -height and -width command line
+    arguments.
+    </BLOCKQUOTE>
+
+<HR> <!----------------------------------------------------------------->
+<P>
+<H2><STRONG><A name="PRINTER">Why does PAVE crash when I try to print a plot?</A></STRONG></H2>
+
+    <BLOCKQUOTE>
+    In versions prior to 1.5, PAVE would crash if the PRINTER
+    environment variable was not defined.  Version 1.5 fixes this
+    problem.
+    </BLOCKQUOTE>
+
+<P>
+<A HREF="#TOC"><EM>Return To <STRONG>Table of Contents</STRONG></EM></A>
+<P>
+<HR> <!----------------------------------------------------------------->
+<P>
+<H2><STRONG><A name="BadDrawable">
+Why do I sometimes get the message X Error: BadDrawable when saving an image from a script?
+</A></STRONG></H2>
+
+    <BLOCKQUOTE>
+    If you get an X Error such as BadDrawable when creating a plot in a
+    script it may be due to a timing error.  e.g. this occurred with the
+    following script:
+<PRE>
+...
+-titleString "Layer 1 VOC to NOx Ratio" \
+-subTitle1 "OTAG 1988 Basecase D" \
+-subTitle2 " &lt; 4 = VOC limited, &gt; 15 = NOx limited" \
+-gtype tile -saveImage MPEG /ssa/modeling/uamv/post/ratio88b.mpg \
+</PRE>
+    This is due to a timing problem.  You can correct this by placing:
+    <CODE>-system \"sleep 5\</CODE> in between the <CODE>-gtype tile</CODE>
+    and the <CODE>-saveImage</CODE>.
+    This gives the plot time to draw before saving it.
+    </BLOCKQUOTE>
+
+<P>
+<A HREF="#TOC"><EM>Return To <STRONG>Table of Contents</STRONG></EM></A>
+<P>
+<HR> <!----------------------------------------------------------------->
+<P>
+<H2><STRONG><A name="RunningAverage">
+How can I view the average of data over multiple time steps (e.g. an 8 hour average)?
+</A></STRONG></H2>
+
+    <BLOCKQUOTE>
+    In PAVE version 2.1 alpha, it is possible to compute nHour averages
+    using the <CODE>-NhourAverage</CODE> command line option, or from
+    PAVE's main GUI select the  Graphics menu item and then select the
+    menu Create N-Hour Average Tile Plot.
+    <P>
+
+    Prior to PAVE version 2.1 it was possible to do this with PAVE,  but
+    the syntax was currently difficult. Here is an example of a formula
+    to compute a six hour average:
+<PRE>
+(O3a:1+O3a:2+O3a:3+O3a:4+O3a:5+O3a:6)/6
+</PRE>
+
+    For versions prior to PAVE version 2.1 we recommended that you
+    preprocess  the data with a program external to PAVE and then use
+    PAVE to view the results.   EPA's SCRAM site at
+    <A HREF="http://www.epa.gov/scram">http://www.epa.gov/scram</A>
+    may have such a utility.
+    </BLOCKQUOTE>
+
+<P>
+<A HREF="#TOC"><EM>Return To <STRONG>Table of Contents</STRONG></EM></A>
+<P>
+<HR> <!----------------------------------------------------------------->
+<P>
+<H2><STRONG><A name="NoStartup">
+]Why does PAVE print out some information and then crash with a
+segmentation fault or a memory fault?]</A></STRONG></H2>
+
+    <BLOCKQUOTE>
+    <STRONG>Note that the example below should not occur with PAVE
+    version 2.1 or later</STRONG>. If the file
+    <VAR>.pave_exe.pave_usage.log</VAR> is not
+    writable by the user running PAVE, then versions of PAVE prior to
+    1.5 will crash, as in this example from a Sun:
+<PRE>
+pave
+
+Starting up the software bus...
+
+    Package for Analysis and Visualization of Environmental data
+               PAVE v1.4.2 15 Dec 1997 12:12:57
+
+                For further information on PAVE:
+Copyright Info: type -copyright in PAVE's standard input
+         Usage: type -usage in PAVE's standard input
+    User Guide: http://www.emc.mcnc.org/EDSS/pave_doc/index.shtml
+           FAQ: http://www.emc.mcnc.org/EDSS/pave_doc/Pave.FAQ.html
+         Email: pave@emc.mcnc.org
+
+/env/apps/edss/subsys/frmwk/scripts/pave[531]: 28068 Segmentation Fault
+</PRE>
+
+    To correct this problem, the person who installed PAVE must do
+<PRE>
+chmod a+w $EDSS_DIR/$EDSS_ENV/bin/OPTIMIZE/.pave_exe.pave_usage.log
+</PRE>
+    Better error reporting for this situation is implemented in version 1.5.
+    </BLOCKQUOTE>
+
+
+
+<P>
+<A HREF="#TOC"><EM>Return To <STRONG>Table of Contents</STRONG></EM></A>
+<P>
+<HR> <!----------------------------------------------------------------->
+<P>
+<H2><STRONG><A name="mpeg_play">
+Why does the mpeg_play that comes with PAVE fail on some Suns?
+</A></STRONG></H2>
+
+    <BLOCKQUOTE>
+    On some Sun machines, you may get an error such as the following
+    when running the <VAR>mpeg_play</VAR> that comes with PAVE:
+<PRE>
+ld.so.1: mpeg_play: fatal: libX11.so.5.0: can't open file: errno=2
+    Killed
+</PRE>
+    This occurs because mpeg_play was compiled on a computer with access
+    to <VAR>libX11.so.5.0</VAR>.  If this is not available on your
+    system, then mpeg_play may not run.  However, you can download
+    mpeg_play off the internet and build it to run on your system.  The
+    web site <A HREF="http://www.perry.com/resources.html">
+    http://www.perry.com/resources.html</A> has links to
+    <VAR>mpeg_play</VAR> and other MPEG players.
+    </BLOCKQUOTE>
+
+<P>
+<A HREF="#TOC"><EM>Return To <STRONG>Table of Contents</STRONG></EM></A>
+<P>
+<HR> <!----------------------------------------------------------------->
+<P>
+<H2><STRONG><A name="obscuredAnimation">
+Why is part of the animation I saved obscured by non-PAVE windows?
+</A></STRONG></H2>
+
+    <BLOCKQUOTE>
+    The way images are saved in PAVE is by grabbing it off of the
+    X-windows display (after which point it is saved to an XWD formatted
+    image and then converted to gif or another format).  Therefore if
+    there is another window obscuring all or part of the image while it
+    is being saved, that part of the other window will be saved instead.
+    <p> 
+    
+    Thus, if you are exporting animations or otherwise saving images
+    in PAVE, the window of interest must be in the foreground and should
+    not be obscured by any other windows during the time that the images
+    are captured.  When saving an animation, the images are first
+    captured, and then go through several conversion steps.  It is OK to
+    put the PAVE window in the background during the conversion steps
+    (i.e. once it has finished animating the image).
+    </BLOCKQUOTE>
+
+<P>
+<A HREF="#TOC"><EM>Return To <STRONG>Table of Contents</STRONG></EM></A>
+<P>
+<HR> <!----------------------------------------------------------------->
+<P>
+<H2><STRONG> <A name="gridResolution">
+Can I use datasets with identical domain sizes but different grid resolutions in a single formula?
+</A></STRONG></H2>
+
+    <BLOCKQUOTE>
+    You cannot combine two datasets with different grid resolutions in a
+    formula in PAVE (e.g. to calculate a difference).  Think of the
+    datasets as matrices - you can't add or subtract two matrices of
+    different dimensions and get a meaningful result.  If you need to do
+    something like this, use a program external to PAVE to aggregate the
+    finer grid to the same dimensions as the coarser one or to
+    interpolate the coarser grid to the same dimensions as the finer
+    one, then load the resulting dataset into PAVE.
+    </BLOCKQUOTE>
+
+<P>
+<A HREF="#TOC"><EM>Return To <STRONG>Table of Contents</STRONG></EM></A>
+<P>
+<HR> <!----------------------------------------------------------------->
+<P>
+<H2><STRONG> <A name="ScientificNotation">
+How do I use scientific notation for numeric labels on tile plots?
+</A></STRONG></H2>
+
+    <BLOCKQUOTE>
+    The Format field on a tile plot's Control...Configure menu's
+    dialog box can be set to adjust the tile plot legend's
+    number format.  For example, if you set it to (in the C
+    language's printf() routine's format syntax) <CODE>%4.2e</CODE> (then hit
+    return), the numbers on the legend will then look like:
+    <BLOCKQUOTE>
+    9.49e-02
+    </BLOCKQUOTE>
+    These configurations can be saved to a file, and used in future
+    pave sessions.  For example, if <VAR>/home/user/config</VAR>
+    contains the single line:
+    <PRE>
+Legend_Format   %4.2e
+    </PRE>
+    and you start <VAR>pave</VAR> using
+    <PRE>
+pave -configFile /home/user/config
+    </PRE>
+    then all of your plots will automatically use this notation. In
+    fact, you might want to just alias <VAR>pave</VAR> to be  <VAR>pave
+    -configFile &lt;your configFile&gt;</VAR> if you always want this.
+    Please see the Configuring Plots section of the PAVE User Guide at
+    <A HREF="PaveManual.html#Configuring">PaveManual.html#Configuring</A>
+    for further information on how to do this.
+    </BLOCKQUOTE>
+
+<P>
+<A HREF="#TOC"><EM>Return To <STRONG>Table of Contents</STRONG></EM></A>
+<P>
+<HR> <!----------------------------------------------------------------->
+<P>
+<H2><STRONG><A NAME="24bitImage">
+why can't i create gif files or mpegs when I
+display pave back to a pc?
+</A></STRONG></H2>
+
+    <BLOCKQUOTE>
+    With PAVE version 2.1 Alpha, we have changed how we generate gif images,
+    to avoid this problem.  If you experience it with a previous version,
+    we recommend that you download the latest version of PAVE.<p>
+
+    Prior to PAVE version 2.1 Alpha, when you displayed PAVE back to a
+    PC using software such as Hummingbird's Exceed, a problem can result when
+    trying to create GIFs or MPEGs due to the number of colors available on
+    the PC display.  You may see a message in the PAVE window like:
+    <PRE>
+Writing XWD image '/home/eyth/test.gif.xwd'...
+Converting '/home/eyth/test.gif.xwd' to GIF image '/home/eyth/test.gif'...
+imconv: /home/eyth/test.gif.xwd: XWD 24-bit images must be stored in 32-bit units
+imconv: Read failed
+    </PRE>
+    For versions prior to PAVE 2.1 Alpha, if you wish to capture images while
+    displaying to a PC, bring up your PC's Display properties and set the
+    Color Palette to use 256 colors.  This problem does not occur when
+    displaying back to UNIX machines.
+    </BLOCKQUOTE>
+
+<P>
+<A HREF="#TOC"><EM>Return To <STRONG>Table of Contents</STRONG></EM></A>
+<P>
+<HR> <!----------------------------------------------------------------->
+<P>
+<H2><STRONG> <A NAME="AcceptingInput">
+Why won't PAVE accept the inputs I'm typing into the configure window?
+</A></STRONG></H2>
+
+    <BLOCKQUOTE>
+    If you're entering a value on the configure window (e.g. minimum or
+    maximum) and the change isn't reflected in the plot, be sure to hit
+    return after  typing in the new value.  This will cause PAVE to
+    accept the new value and adjust the plot accordingly.
+    </BLOCKQUOTE>
+
+<P>
+<A HREF="#TOC"><EM>Return To <STRONG>Table of Contents</STRONG></EM></A>
+<P>
+<HR> <!----------------------------------------------------------------->
+<P>
+<H2><STRONG> <A NAME="MeshPlot8Bit">Why can't I create a mesh plot?</A></STRONG></H2>
+
+    <BLOCKQUOTE>
+    If you are using a display with other than 8 bit color (i.e. 256
+    colors), the mesh plot may not work.  Many systems allow you to configure
+    this display setting.  On Windows, you can bring up the display properties
+    window and on the Settings tab set the Color Palette to 256.  On Linux,
+    you can start X-windows with the command <VAR>startx -bpp 8 </VAR>.
+    </BLOCKQUOTE>
+
+<P>
+<A HREF="#TOC"><EM>Return To <STRONG>Table of Contents</STRONG></EM></A>
+<P>
+<HR> <!----------------------------------------------------------------->
+<P>
+<H2><STRONG><A NAME="Future">
+What does the future hold for PAVE?
+</A></STRONG></H2>
+
+    <BLOCKQUOTE>
+    We would love to add a number of features to PAVE, but unfortunately at
+    the current time we are out of funds to use for PAVE development.
+    If you or someone you know is interested in some of these features
+    and has ideas about how to obtain funding to continue development,
+    please contact us via email to the current maintainer,
+    <A HREF="mailto:carlie@jyuarborough.com">carlie@jyuarborough.com</A>
+    <P>
+
+    Some of the features we would like to add are listed below.<p>
+
+    <UL>
+        <LI><STRONG>Support <A HREF="http://cfconventions.org/">CF-convention</A>
+        netCDF data</STRONG>
+        <P>
+
+        <LI><STRONG>Make PAVE a proper I/O&nbsp;API client,</STRONG>
+        <P>
+        Presently, it does &quot;raw&quot; netCDF operations, treating
+        I/O&nbsp;API files as though it understood the format (it
+        doesn't, completely ;-( ).
+        <P>
+
+        <LI><STRONG>Handle I/O&nbvsp;API time independent data correctly
+        in formulas,</STRONG>
+        <P>
+
+        <LI><STRONG>Proper image-export facilities</STRONG>
+        <P>
+        Presently, PAVE does (potentially virtual) screen captures for
+        images.  It would be good to use something like
+        <A HREF="https://libgd.github.io/"><VAR>libgd</VAR></A> directly,
+        for image generation and export.
+        <P>
+
+       <LI><STRONG> Plot observational data & compare with model data</STRONG>
+        <p>
+        <EM>DONE for pave-2.1 and later.</EM>
+        <P>
+        (This is being funded for development for PAVE release 2.1 Alpha) <p>
+        There are many possibilities here - we can plot explicit points, or gridded
+        observations.  There are a several potential types of rendering including
+        colored circles or textual numbers at observation sites, and contour lines
+        showing the observations (with the first two being easier to incorporate).
+        It is likely that once we have the ability to plot explicit points, we can use
+        the software to view point source emissions data of various types.<p>
+
+        <LI><STRONG> Improve scripting capabilities</STRONG><p>
+
+        All
+        (This is being funded for development for PAVE release 2.1 Alpha) <p>
+        PAVE capabilities (as are practical) should be available via scripts and
+        standard input.<p>
+
+        <LI><STRONG> Improved statistical capabilities</STRONG><p>
+
+           People often want to use simple statistics to assist with there data
+        analysis (e.g. mean, std. dev.).  It would be good if PAVE could produce
+        these.  In addition, people may want to slice the data in different ways to
+        obtain these statistics (e.g. mean for each time step or for each vertical
+        layer).  There are also a number of commonly used statistics that deal with
+        comparing model data with observations.  We may want to examine the "tables"
+        generated for OTAG for ideas for other typically used statistics.<p>
+
+        <LI><STRONG> Optimize PAVE performance and memory usage</STRONG><p>
+
+        <EM>DONE for pave-3.0</EM>
+        <P>
+        PAVE performance, both CPU and memory related, can be improved in a number
+        of ways.  For example, loops can be reordered to reduce paging to disk, memory
+        leaks can be plugged, and memory can be reused in some formulas.<p>
+
+        <LI><STRONG> User interface improvements</STRONG><p>
+
+       The PAVE user interface could use a number of enhancements.  Probably the
+        most important of these is to make all plots accessible via the user
+        interface.  For example, vector plots, scatter plots, and time series plots
+        with multiple lines are not currently available via the user interface.  In
+        addition, small usability improvements could include: an hourglass cursor when
+        PAVE is busy, an indicator of which "mode" a PAVE tile plot is in (e.g.
+        probing, zooming, time series), making changes to the min and max take effect
+        without hitting return, giving windows more meaningful names, and many more.<p>
+
+        <LI><STRONG> Add new types of plots and options for existing ones</STRONG><p>
+
+           Additional kinds of plots have been requested by users.  Some examples
+        include: vertical cross section plots where the size of the layers is
+        proportional to actual layer size, vertical profiles, contour plots, flux
+        plots, observational data plots described above, PIG plots, nested grid plots,
+        adaptive grid plots, box & whisker plots.  Also, making scatter plots internal
+        to PAVE would help reduce the problems associated with transferring data to
+        BLT and would provide additional flexibility.<p>
+
+        <LI><STRONG> Improve usability of long formulas</STRONG><p>
+
+           Currently, long formulas are often difficult to use.  This might be
+        improved by providing some defaults for commonly used long formulas (e.g. VOC,
+        TOC, wind speed).  Allowing user-defined aliases for long formulas and
+        hierarchical formulas (e.g. NOy - NOx) would be very useful.  Allowing
+        the user to specify that multiple parts of a formula refer to the same data
+        set would reduce the complexity involved with long formulas (e.g. [NO + NO2]a
+        where the a is applied to both NO and NO2).<p>
+
+        <LI><STRONG> Improve use of map backgrounds</STRONG><p>
+
+           It would be useful to be able to plot multiple maps (e.g. state + counties,
+        or counties + roads) using different colors and thicknesses as needed.
+        Another possibility would be to allow backgrounds generated by packages such
+        as GISs to be displayed - these might show roads, water, cities, etc.  <p>
+
+        <LI><STRONG> Increase configurability of plots</STRONG><p>
+
+           It would be useful in some cases to allow users to define the cutoffs
+        between the colors plotted (currently PAVE makes each bin of equal size from
+        the min to the max).  Another alternative might include assigning bins according
+        to percentiles.  Additional configuration options could be added to vector
+        plots wrt the density of the vectors plotted.<p>
+
+        <LI><STRONG> Rework color usage </STRONG><p>
+
+           We might use the colors allocated by netscape so the two packages do not
+        fight for colors, we could prevent allocation of colors that are not
+        actually being used, and provide the user with the option of a private color
+        table so that PAVE is not at the mercy of other applications when allocating
+        colors.  Also, we could improve the options for black and white plots by
+        adding patterns to the existing shades of gray.<p>
+
+        <LI><STRONG> Improve plot labeling & layout</STRONG><p>
+
+           The density and location of grid cell numbering on tile plots and in the
+        domain selector could be improved. Also, the legend could be outlined in black
+        to set off any white or light values and be positioned relative to the size of
+        the legend labels.  The size of tile plots could be made user configurable,
+        and the aspect ratio preserved when the plot is manually resized.  Data
+        plotted on time series plots could be labeled more clearly.  <p>
+
+        <LI><STRONG> Improve Data Import / Export capabilities</STRONG><p>
+
+        (This is being funded for development for PAVE release 2.1 Alpha) <p>
+           It may be possible to include additional readers for PAVE.  Also,
+        enhancements of the data export facility would be very useful.  For example,
+        one might want to create a new data set out of components several other data
+        sets, or from the result of several complex formulas.  For this, PAVE would
+        need to allow multiple formulas to be selected for export, and allow the
+        renaming of variables in the output dataset (e.g. call a variable NOy instead
+        of the long formula used to calculate NOy).  <p>
+
+        <LI><STRONG> and many more...</STRONG><p><A HREF="index.shtml#TOC">Return To Table of Contents</A>
+    </UL>
+    </BLOCKQUOTE>
+
+
+<P>
+<A HREF="#TOC"><EM>Return To <STRONG>Table of Contents</STRONG></EM></A>
+<P>
+<HR> <!----------------------------------------------------------------->
+
+    <BLOCKQUOTE>
+    <A HREF="PAveManual.html#TOC"><EM>Return To <STRONG>PAVE Users Guide</STRONG></EM></A>
+    <P>
+    <A HREF="../index.html"><EM>Return To <STRONG>cjcoats.github.io</STRONG></EM></A>
+    </BLOCKQUOTE>
+
+    <PRE>
+    $Id: Pave.FAQ.html 82 2018-03-12 19:15:51Z coats $
+    </PRE>
+
+</BODY>
+</HTML>
