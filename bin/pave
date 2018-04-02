@@ -35,8 +35,9 @@ if ( ! $?PAVE_MAPDIR    ) setenv PAVE_MAPDIR   ${PAVE_DIR}/maps
 if ( ! $?PAVE_ENV       ) setenv PAVE_ENV      Linux2_x86_64gfort_medium
 if ( ! $?PAVE_EXE       ) setenv PAVE_EXE      ${PAVE_BINDIR}/pave.exe
 
-if ( ! $?TERMINAL       ) setenv TERMINAL   xterm
-if ( ! $?DEBUGGER       ) setenv DEBUGGER   gdb
+if ( ! $?TERMINAL       ) setenv TERMINAL   `which xterm`
+if ( ! $?DEBUGGER       ) setenv DEBUGGER   `which gdb`
+if ( ! $?BROWSER        ) setenv BROWSER    `which firefox`
 
 # For non-unicode xterm:
 
@@ -64,7 +65,6 @@ setenv PNMDEPTH         $PAVE_BINDIR/pnmdepth
 setenv PNMTOPS          $PAVE_BINDIR/pnmtops
 setenv XWDTOPNM         $PAVE_BINDIR/xwdtopnm
 
-setenv PAVE_MOSAIC      `which firefox`
 setenv CONVERT          `which convert`
 setenv RSH              `which rsh`
 setenv BASENAME         `which basename`

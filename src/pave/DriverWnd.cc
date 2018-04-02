@@ -256,9 +256,8 @@ DriverWnd::DriverWnd
             }
         }
 
-    exportAVS_UI_ = new ExportServer ( PAVE_EXPORT_AVS, "AVS", info_window_, "AVS" );
-    exportTabbed_UI_ = new ExportServer ( PAVE_EXPORT_TABBED, "ASCII", info_window_, "ASCII" );
-
+    exportAVS_UI_    = new ExportServer ( PAVE_EXPORT_AVS,    "AVS",    info_window_, "AVS" );
+    exportTabbed_UI_ = new ExportServer ( PAVE_EXPORT_TABBED, "ASCII",  info_window_, "ASCII" );
     exportnetCDF_UI_ = new ExportServer ( PAVE_EXPORT_NETCDF, "netCDF", info_window_, "netCDF" );
 
     assert ( exportAVS_UI_ && exportTabbed_UI_ && exportnetCDF_UI_ );
@@ -1555,9 +1554,9 @@ void DriverWnd::createUI ( Widget parent )
                                     xmPushButtonWidgetClass, helpMenu, NULL, 0 );
     ioapi = XtCreateManagedWidget ( "Models-3 IO/API",
                                     xmPushButtonWidgetClass, helpMenu, NULL, 0 );
-    XtAddCallback ( ug, XmNactivateCallback, &DriverWnd::userGuideCB, this );
-    XtAddCallback ( faq, XmNactivateCallback, &DriverWnd::faqCB, this );
-    XtAddCallback ( ioapi, XmNactivateCallback, &DriverWnd::ioapiCB, this );
+    XtAddCallback ( ug,    XmNactivateCallback, &DriverWnd::userGuideCB, ( XtPointer ) this );
+    XtAddCallback ( faq,   XmNactivateCallback, &DriverWnd::faqCB,       ( XtPointer ) this );
+    XtAddCallback ( ioapi, XmNactivateCallback, &DriverWnd::ioapiCB,     ( XtPointer ) this );
 
 
     // Store the IDs of these buttons to set their sensitivity status later
@@ -1577,60 +1576,63 @@ void DriverWnd::createUI ( Widget parent )
     // Create a label widget
     selection_ = XtVaCreateManagedWidget ( "Current Selections:",
                                            xmLabelWidgetClass,     parent_,
-                                           XmNtopAttachment,               XmATTACH_WIDGET,
-                                           XmNtopWidget,                   menuBar_,
-                                           XmNtopOffset,                   10,
-                                           XmNleftAttachment,              XmATTACH_FORM,
-                                           XmNleftOffset,                  10,
+                                           XmNtopAttachment,       XmATTACH_WIDGET,
+                                           XmNtopWidget,           menuBar_,
+                                           XmNtopOffset,           10,
+                                           XmNleftAttachment,      XmATTACH_FORM,
+                                           XmNleftOffset,          10,
                                            NULL );
 
     // Create a scroll window widget
     sw_ = XtVaCreateManagedWidget ( "sw_",
                                     xmScrolledWindowWidgetClass,    parent_,
-                                    XmNtopAttachment,       XmATTACH_WIDGET,
-                                    XmNtopWidget,           selection_,
-                                    XmNtopOffset,           10,
-                                    XmNleftAttachment,      XmATTACH_FORM,
-                                    XmNleftOffset,          10,
-                                    XmNrightAttachment,     XmATTACH_FORM,
-                                    XmNrightOffset,         10,
-                                    XmNscrollBarDisplayPolicy,  XmAS_NEEDED,
-                                    XmNscrollingPolicy,     XmAUTOMATIC,
+                                    XmNtopAttachment,               XmATTACH_WIDGET,
+                                    XmNtopWidget,                   selection_,
+                                    XmNtopOffset,                   10,
+                                    XmNleftAttachment,              XmATTACH_FORM,
+                                    XmNleftOffset,                  10,
+                                    XmNrightAttachment,             XmATTACH_FORM,
+                                    XmNrightOffset,                 10,
+                                    XmNscrollBarDisplayPolicy,      XmAS_NEEDED,
+                                    XmNscrollingPolicy,             XmAUTOMATIC,
                                     NULL );
 
     info_window_ = XtVaCreateManagedWidget ( "info",
                    xmRowColumnWidgetClass, sw_,
-                   XmNwidth,       800,
-                   XmNheight,      300,
-                   XmNorientation,     XmVERTICAL,
-                   XmNnumColumns,      1,
+                   XmNwidth,               800,
+                   XmNheight,              300,
+                   XmNorientation,         XmVERTICAL,
+                   XmNnumColumns,          1,
                    NULL );
 
-    LoadConfigBrowser_ = new LocalFileBrowser
-    ( info_window_, ( char * ) "Configuration", ( char * ) NULL, ( void * ) NULL,
-      ( void * ) &load_configCB, ( void * ) this );
+    LoadConfigBrowser_ = new LocalFileBrowser( info_window_, 
+                                               ( char * ) "Configuration", 
+                                               ( char * ) NULL, 
+                                               ( void * ) NULL,
+                                               ( void * ) &load_configCB, 
+                                               ( void * ) this );
 
     // Create a status widget
     Widget label = XtVaCreateManagedWidget ( "PAVE Status Messages: ",
-                   xmLabelWidgetClass,    parent_,
+                   xmLabelWidgetClass,     parent_,
                    XmNtopAttachment,       XmATTACH_WIDGET,
                    XmNtopWidget,           sw_,
                    XmNtopOffset,           20,
-                   XmNleftAttachment,              XmATTACH_FORM,
-                   XmNleftOffset,                  10,
+                   XmNleftAttachment,      XmATTACH_FORM,
+                   XmNleftOffset,          10,
                    XmNleftAttachment,      XmATTACH_FORM,
                    NULL );
 
     // Create a status widget
     status_ = XtVaCreateManagedWidget ( " ",
-                                        xmTextWidgetClass,              parent_,
+                                        xmTextWidgetClass,      parent_,
                                         XmNtopAttachment,       XmATTACH_WIDGET,
                                         XmNtopWidget,           label,
                                         XmNleftAttachment,      XmATTACH_FORM,
                                         XmNleftOffset,          10,
                                         XmNrightAttachment,     XmATTACH_FORM,
                                         XmNrightOffset,         10,
-                                        XmNbottomAttachment,        XmATTACH_FORM,
+                                        XmNbottomAttachment,    XmATTACH_FORM,
                                         XmNbottomOffset,        10,
                                         XmNeditable,            False,
                                         XmNcursorPositionVisible,   False,
@@ -3609,11 +3611,11 @@ char *DriverWnd::getURL ( char *name )
     dirname = getenv ( "PAVE_DIR" ) ;
     if ( dirname && *dirname )
         {
-        sprintf ( url, "file:///%s/%s", dirname, name );
+        sprintf ( url, "file://%s/Docs/%s", dirname, name );
         }
     else{
-        sprintf ( url, "file://%s", 
-                  "https://cjcoats.github.io/pave/PaveManual.html" );
+        sprintf ( url, "%s/%s", 
+                  "https://cjcoats.github.io/pave", name );
         }
 
     return url;
@@ -3622,36 +3624,52 @@ char *DriverWnd::getURL ( char *name )
 
 void DriverWnd::showURL ( char *url )
     {
-    char message[256];
+    char    command[1028 ];
+    char  * browser ;
+    size_t  blen, ulen ;
+    int     status ;
 
-    int moduleId = BusFindModuleByName ( bd_, "Help" );
-    if ( moduleId < 0 ) /* we need to start the Help daemon */
-        {
-        BusVerifyClient ( bd_, NULL, "Help", 1, 18, NULL, message );
-        moduleId = BusFindModuleByName ( bd_, "Help" );
-        if ( moduleId < 0 ) /* we couldn't start the Help daemon */
-            {
-            Message error (  info_window_, XmDIALOG_ERROR,
-                             "Couldn't start help daemon!" );
-            return;
-            }
-        }
+    Message error (  info_window_, XmDIALOG_ERROR,
+                     "In DriverWnd::showURL" );
 
-    int typeId = BusFindTypeByName ( bd_, "HTML URL" );
-    if ( typeId > 0 )
-        {
-        struct BusMessage bmsg;
-        bmsg.toModule = moduleId;
-        bmsg.messageType = typeId;
-        bmsg.messageLength = strlen ( url )+1;
-        bmsg.message = url;
-        BusSendMessage ( bd_, &bmsg ); // send the message via bus-master
-        }
-    else
+    browser = getenv( "BROWSER" ) ;
+    if ( ! browser )
         {
         Message error (  info_window_, XmDIALOG_ERROR,
-                         "Cannot identify message type: HTML URL" );
+                         "DriverWnd::showURL: Missing environment variable BROWSER" );
+        return ;
         }
+    blen    = strnlen( browser, (size_t)511 ) ;
+    ulen    = strnlen(     url, (size_t)1024 - blen ) ;
+    if ( ! blen )
+        {
+        Message error (  info_window_, XmDIALOG_ERROR,
+                         "DriverWnd::showURL: Bad environment variable BROWSER" );
+        return ;
+        }
+    if ( ! ulen )
+        {
+        Message error (  info_window_, XmDIALOG_ERROR,
+                         "DriverWnd::showURL: Bad URL" );
+        return ;
+        }
+    if ( blen+ulen > 1024 )
+        {
+        Message error (  info_window_, XmDIALOG_ERROR,
+                         "DriverWnd::showURL: BROWSER  URL  overflow" );
+        return ;
+        }
+
+    sprintf( command, "%s %s &", browser, url ) ;
+
+    status = system( command ) ;
+    if ( ! status )
+        {
+        Message error (  info_window_, XmDIALOG_ERROR,
+                         "DriverWnd::showURL: system() failure" );
+        return ;
+        }
+        
     return;
     }
 
@@ -3659,15 +3677,15 @@ void DriverWnd::showURL ( char *url )
 void DriverWnd::userGuideCB ( Widget, XtPointer clientData, XtPointer )
     {
     DriverWnd *obj = ( DriverWnd * ) clientData;
-    obj->updateStatus ( "Displaying PAVE User Guide using Mosaic..." );
-    obj->showURL ( obj->getURL ( "Pave.html" ) );
+    obj->updateStatus ( "Displaying PAVE User Guide using ${BROWSER}..." );
+    obj->showURL ( obj->getURL ( "PaveManual.html" ) );
     }
 
 
 void DriverWnd::faqCB ( Widget, XtPointer clientData, XtPointer )
     {
     DriverWnd *obj = ( DriverWnd * ) clientData;
-    obj->updateStatus ( "Displaying PAVE FAQ using Mosaic..." );
+    obj->updateStatus ( "Displaying PAVE FAQ using ${BROWSER}..." );
     obj->showURL ( obj->getURL ( "Pave.FAQ.html" ) );
     }
 
